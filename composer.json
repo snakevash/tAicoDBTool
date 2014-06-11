@@ -1,0 +1,14 @@
+{
+    "name": "aico/dbtools",
+    "description": "database tools",
+    "authors": [
+        {
+            "name": "snake",
+            "email": "164011252@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpoffice/phpexcel": "dev-develop"
+    }
+}
