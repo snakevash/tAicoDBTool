@@ -6,7 +6,7 @@
  * Date: 14-6-11
  * Time: 下午4:01
  */
-
+use \Snake\FileInfo;
 
 class MyTest extends \PHPUnit_Framework_TestCase {
     public function testABC(){
@@ -15,6 +15,7 @@ class MyTest extends \PHPUnit_Framework_TestCase {
 //        $datas = $meedo->select('device','*');
 //        var_dump($datas);
 //        echo OtherConfig::BRANDAFTER;
+//        var_dump(FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE));
     }
 }
  
