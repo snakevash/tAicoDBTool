@@ -11,5 +11,8 @@
     "require": {
         "phpoffice/phpexcel": "dev-develop",
         "catfan/medoo":"v0.9.6"
+    },
+    "autoload":{
+        "files":["config/DBFileConfig.php"]
     }
 }
