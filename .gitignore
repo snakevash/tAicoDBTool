@@ -1,10 +1,12 @@
 /bootstrap/compiled.php
 /vendor
-/excels
+/codebasebefore
+/codebaseafter
 composer.phar
 composer.lock
 .DS_Store
 Thumbs.db
 /.idea
 /config
-/imported
+/brandbefore
+/brandafter

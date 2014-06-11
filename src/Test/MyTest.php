@@ -10,7 +10,10 @@
 
 class MyTest extends \PHPUnit_Framework_TestCase {
     public function testABC(){
-        #var_dump(DBFileConfig::$dbinfo);
+//        var_dump(DBFileConfig::$dbinfo);
+//        $meedo = new medoo(DBFileConfig::$dbinfo);
+//        $datas = $meedo->select('device','*');
+//        var_dump($datas);
     }
 }
  
