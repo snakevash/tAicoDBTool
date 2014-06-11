@@ -9,6 +9,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "phpoffice/phpexcel": "dev-develop"
+        "phpoffice/phpexcel": "dev-develop",
+        "catfan/medoo":"v0.9.6"
     }
 }
