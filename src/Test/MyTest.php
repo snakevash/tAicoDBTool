@@ -14,6 +14,7 @@ class MyTest extends \PHPUnit_Framework_TestCase {
 //        $meedo = new medoo(DBFileConfig::$dbinfo);
 //        $datas = $meedo->select('device','*');
 //        var_dump($datas);
+
     }
 }
  

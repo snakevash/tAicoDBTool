@@ -17,6 +17,6 @@
             "Snake\\":"src/",
             "Test\\":"src/"
         },
-        "files":["config/DBFileConfig.php"]
+        "files":["config/DBFileConfig.php","config/OtherConfig.php"]
     }
 }

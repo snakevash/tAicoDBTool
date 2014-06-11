@@ -7,6 +7,6 @@ composer.lock
 .DS_Store
 Thumbs.db
 /.idea
-/config
+/config/DBFileConfig.php
 /brandbefore
 /brandafter
