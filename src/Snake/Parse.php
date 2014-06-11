@@ -7,7 +7,7 @@
  * Time: 上午10:21
  */
 
-namespace src\Snake;
+namespace Snake;
 
 
 class Parse {

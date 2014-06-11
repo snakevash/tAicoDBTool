@@ -13,6 +13,10 @@
         "catfan/medoo":"v0.9.6"
     },
     "autoload":{
+        "psr-0":{
+            "Snake\\":"src/",
+            "Test\\":"src/"
+        },
         "files":["config/DBFileConfig.php"]
     }
 }
