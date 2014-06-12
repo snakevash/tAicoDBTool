@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 其他配置
  *
@@ -6,8 +7,8 @@
  * Date: 14-6-11
  * Time: 下午4:43
  */
-
-class OtherConfig {
+class OtherConfig
+{
     /**
      * 品牌导入之后的文件夹
      */
@@ -27,4 +28,23 @@ class OtherConfig {
      * 红外代码导入之前的文件夹
      */
     const CODEBASEBEFORE = './codebasebefore';
-} 
+}
+
+/**
+ * 获得变量的名字
+ *
+ * @param $var
+ * @param null $scope
+ * @return mixed
+ */
+function getVariableName(&$var, $scope = null)
+{
+    if (null == $scope) {
+        $scope = $GLOBALS;
+    }
+    $tmp = $var;
+    $var = 'tmp_exists_' . mt_rand();
+    $name = array_search($var, $scope, true);
+    $var = $tmp;
+    return $name;
+}

@@ -16,6 +16,10 @@ class MyTest extends \PHPUnit_Framework_TestCase {
 //        var_dump($datas);
 //        echo OtherConfig::BRANDAFTER;
 //        var_dump(FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE));
+
+        # 测试全局函数
+//        $test = 'abc';
+//        $this->assertEquals('test',getVariableName($test),'获得变量名字');
     }
 }
  

@@ -19,21 +19,21 @@ class DeviceInfo
      * @var array 文件名字匹配
      */
     public static $NameMap = array(
-        'TV' => '1',
-        'DVD' => '2',
-        'VCR' => '3',
-        'Projector' => '4',
-        'STB' => '5',
-        'Aircon' => '6',
-        'Amp' => '7',
-        'Heater' => '8',
-        'Hifi' => '9',
-        'Camera' => '11',
-        'Fan' => '12',
-        'Toy' => '13',
-        'Screen' => '14',
-        'Other' => '20',
-        'Light' => '15'
+        'TV' => '2',
+        'Aircon' => '4',
+        'STB' => '6',
+        'Amp' => '8',
+        'DVD' => '10',
+        'Projector' => '12',
+        'Heater' => '14',
+        'Fan' => '16',
+        'Toy' => '18',
+        'Hifi' => '20',
+        'Camera' => '22',
+        'Screen' => '24',
+        'Light' => '26',
+        'VCR' => '28',
+        'Other' => '30',
     );
 
 
