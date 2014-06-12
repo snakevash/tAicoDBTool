@@ -28,6 +28,11 @@ class OtherConfig
      * 红外代码导入之前的文件夹
      */
     const CODEBASEBEFORE = './codebasebefore';
+
+    /**
+     * 所有品牌的单独文件
+     */
+    const BRANDS = './brands';
 }
 
 /**

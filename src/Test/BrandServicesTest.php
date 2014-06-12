@@ -10,7 +10,7 @@
 class BrandServicesTest extends \PHPUnit_Framework_TestCase {
     public function testGetFileContent(){
         $model = new \Snake\Services\BrandServices();
-        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE);
+        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDS);
         $data = $model->getFileContent($files[0]);
         var_dump($data);
     }
