@@ -12,3 +12,4 @@ require_once 'vendor/autoload.php';
 $sBrand = new \Snake\Services\BrandServices();
 $sfiles = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDS);
 $sBrand->runInsertBrandMain($sfiles[0]);
+
