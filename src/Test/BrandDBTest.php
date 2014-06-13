@@ -29,4 +29,22 @@ class BrandDBTest extends \PHPUnit_Framework_TestCase
 //        $r = $model->isInserted('索尼');
 //        $this->assertTrue($r,'是否已经在数据库了?');
     }
+
+    public function testInsertTDeviceBrand(){
+//        $model = new \Snake\BrandDB($this->db);
+//        $r = $model->insertTDeviceBrand(1,1);
+//        $this->assertEquals('0',$r,'是否已经在数据库了?');
+    }
+
+    public function testIsInsertedTDeviceBrand(){
+//        $model = new \Snake\BrandDB($this->db);
+//        $r = $model->isInsertedTDeviceBrand(1,1);
+//        $this->assertTrue(true,$r,'是否已经在数据库了?');
+    }
+
+    public function testGetBrandID(){
+//        $model = new \Snake\BrandDB($this->db);
+//        $r = $model->getBrandID('索尼');
+//        $this->assertEquals(1,$r,'获得品牌的ID');
+    }
 } 

@@ -70,4 +70,58 @@ class BrandDB
             return false;
         }
     }
+
+    /**
+     * 获得品牌的ID
+     *
+     * @param $DisplayNameCN
+     * @return bool
+     */
+    public function getBrandID($DisplayNameCN){
+        $r = $this->db->select('brand','*',array(
+            'DisplayNameCN'=>$DisplayNameCN
+        ));
+        if(count($r) > 0){
+            return $r[0]['BrandID'];
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 维护设备-品牌关系表
+     *
+     * @param $BrandID
+     * @param $DeviceID
+     * @return array
+     */
+    public function insertTDeviceBrand($BrandID,$DeviceID){
+        $r = $this->db->insert('t_device_brand',array(
+            'BrandID'=>$BrandID,
+            'DeviceID'=>$DeviceID
+        ));
+
+        return $r;
+    }
+
+    /**
+     * 是否已经存在设备-品牌关系
+     *
+     * @param $BrandID
+     * @param $DeviceID
+     * @return array|bool
+     */
+    public function isInsertedTDeviceBrand($BrandID,$DeviceID){
+        $r = $this->db->select('t_device_brand',"*",array(
+            'AND'=>array(
+                'BrandID'=>$BrandID,
+                'DeviceID'=>$DeviceID
+            )
+        ));
+        if(count($r) > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 } 
