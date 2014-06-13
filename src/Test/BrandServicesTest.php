@@ -23,8 +23,8 @@ class BrandServicesTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testLogConsole(){
-        $s = new \Snake\Services\BrandServices();
-        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDS);
-        $s->logConsole('索尼','sony',1,1);
+//        $s = new \Snake\Services\BrandServices();
+//        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDS);
+//        $s->logConsole('索尼','sony',1,1);
     }
 } 

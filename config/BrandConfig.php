@@ -25,38 +25,43 @@ class BrandConfig
         ),
         'STB' => array(
             'startline' => 95,
-            'endline' => 203,
+            'endline' => 387,
             'DeviceID' => 6
         ),
         'DVD' => array(
-            'startline' => 207,
-            'endline' => 233,
+            'startline' => 407,
+            'endline' => 433,
             'DeviceID' => 10
         ),
         'Amp' => array(
-            'startline' => 237,
-            'endline' => 260,
+            'startline' => 437,
+            'endline' => 474,
             'DeviceID' => 8
         ),
         'Projector' => array(
-            'startline' => 263,
-            'endline' => 320,
+            'startline' => 478,
+            'endline' => 535,
             'DeviceID' => 12
         ),
         'Screeen' => array(
-            'startline' => 322,
-            'endline' => 334,
+            'startline' => 537,
+            'endline' => 549,
             'DeviceID' => 24
         ),
         'Hifi' => array(
-            'startline' => 337,
-            'endline' => 412,
+            'startline' => 552,
+            'endline' => 627,
             'DeviceID' => 20
         ),
         'Camera' => array(
-            'startline' => 417,
-            'endline' => 419,
+            'startline' => 632,
+            'endline' => 634,
             'DeviceID' => 22
+        ),
+        'Fan' => array(
+            'startline' => 641,
+            'endline' => 675,
+            'DeviceID' => 16
         )
     );
 
