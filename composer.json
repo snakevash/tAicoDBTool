@@ -20,7 +20,9 @@
         "files":[
             "config/DBFileConfig.php",
             "config/OtherConfig.php",
-            "config/BrandConfig.php"
+            "config/BrandConfig.php",
+            "config/CodeBaseConfig.php",
+            "config/SeriesConfig.php"
         ]
     }
 }
