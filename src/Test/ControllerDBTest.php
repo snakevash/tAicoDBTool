@@ -16,7 +16,17 @@ class ControllerDBTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testInsert(){
-
+//        $model = new \Snake\ControllerDB($this->db);
+//        $id = $model->insert(
+//            'testProtocol',
+//            '1111',
+//            '测试遥控器的名称',
+//            'testSeries',
+//            '9999',
+//            '9998',
+//            'testLogo',
+//            '1');
+//        $this->assertEquals(113,$id,'测试插入遥控器数据库');
     }
 }
  
