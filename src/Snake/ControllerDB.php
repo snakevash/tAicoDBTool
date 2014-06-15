@@ -23,6 +23,19 @@ class ControllerDB {
         $this->db = $db;
     }
 
+    /**
+     * 插入一条遥控器数据
+     *
+     * @param $ControllerProtocol
+     * @param $ControllerType
+     * @param $ControllerName
+     * @param $ControllerSeries
+     * @param $ControllerBrand
+     * @param $ControllerDevice
+     * @param $ControllerImage
+     * @param $HasNumberPad
+     * @return array
+     */
     public function insert(
         $ControllerProtocol,
         $ControllerType,
@@ -34,7 +47,35 @@ class ControllerDB {
         $HasNumberPad){
         $id = $this->db->insert('controller',array(
             'ControllerProtocol'=>$ControllerProtocol,
-            'ControllerType'=>$ControllerType
+            'ControllerType'=>$ControllerType,
+            'ControllerName'=>$ControllerName,
+            'ControllerSeries'=>$ControllerSeries,
+            'ControllerBrand'=>$ControllerBrand,
+            'ControllerDevice'=>$ControllerDevice,
+            'ControllerImage'=>$ControllerImage,
+            'HasNumberPad'=>$HasNumberPad
         ));
+
+        return $id;
     }
+
+    /**
+     * 是否已经插入过
+     *
+     * @param $ControllerName
+     * @return bool
+     */
+    public function isInserted($ControllerName){
+        $r = $this->db->select('controller','*',array(
+            'ControllerName'=>$ControllerName
+        ));
+
+        if(count($r) > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 } 
