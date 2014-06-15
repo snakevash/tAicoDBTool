@@ -61,7 +61,11 @@ class CodeBaseConfig
         'CodeOrder' => 'M',
         'CodeGroup' => 'N',
         'CodeDefaultIcon' => 'T',
-        'DataBits' => 'U',
-        'StartLine' => '5'
+        'DataBits' => 'U'
     );
+
+    /**
+     * @var string 内容起始行
+     */
+    public static $startLine = 5;
 } 
