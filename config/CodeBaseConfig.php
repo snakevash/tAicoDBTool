@@ -14,32 +14,32 @@ class CodeBaseConfig
      */
     public static $controllerConfig = array(
         'ControllerType' => array(
-            'Y' => '1',
-            'X' => 'B'
+            'Y' => '2',
+            'X' => '1'
         ),
         'ControllerName' => array(
-            'Y' => '1',
-            'X' => 'C'
+            'Y' => '2',
+            'X' => '2'
         ),
         'ControllerSeries' => array(
-            'Y' => '1',
-            'X' => 'D'
+            'Y' => '2',
+            'X' => '3'
         ),
         'ControllerBrand' => array(
-            'Y' => '1',
-            'X' => 'E'
+            'Y' => '2',
+            'X' => '4'
         ),
         'ControllerDevice' => array(
-            'Y' => '1',
-            'X' => 'B'
+            'Y' => '2',
+            'X' => '5'
         ),
         'ControllerImage' => array(
-            'Y' => '1',
-            'X' => 'B'
+            'Y' => '2',
+            'X' => '6'
         ),
         'HasNumber' => array(
-            'Y' => '1',
-            'X' => 'B'
+            'Y' => '2',
+            'X' => '7'
         )
     );
 
@@ -47,25 +47,25 @@ class CodeBaseConfig
      * @var array 红外代码配置信息
      */
     public static $codebaseConfig = array(
-        'CodeDisplayName' => 'B',
-        'Protocol' => 'C',
-        'UserCode' => 'D',
-        'CodeKeyTrue' => 'E',
-        'Cycle' => 'F',
-        'ControllerProtocolFlag' => 'G',
-        'RetransFrame' => 'H',
-        'TVFormat' => 'I',
-        'CarrierCycle' => 'J',
-        'DataCycle' => 'K',
-        'CodeName' => 'L',
-        'CodeOrder' => 'M',
-        'CodeGroup' => 'N',
-        'CodeDefaultIcon' => 'T',
-        'DataBits' => 'U'
+        'CodeDisplayName' => '1',
+        'Protocol' => '2',
+        'UserCode' => '3',
+        'CodeKeyTrue' => '4',
+        'Cycle' => '5',
+        'ControllerProtocolFlag' => '6',
+        'RetransFrame' => '7',
+        'TVFormat' => '8',
+        'CarrierCycle' => '9',
+        'DataCycle' => '10',
+        'CodeName' => '11',
+        'CodeOrder' => '12',
+        'CodeGroup' => '13',
+        'CodeDefaultIcon' => '14',
+        'DataBits' => '15'
     );
 
     /**
      * @var string 内容起始行
      */
-    public static $startLine = 5;
+    public static $startLine = 4;
 } 

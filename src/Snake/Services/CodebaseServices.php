@@ -20,9 +20,10 @@ class CodebaseServices
      */
     public function getFileContent($file)
     {
-
-        $PHPExcel = \PHPExcel_IOFactory::load($file);
-        $sheetData = $PHPExcel->getActiveSheet()->toArray(null, true, true, true);
+        $csvFile = new \Keboola\Csv\CsvFile($file);
+        foreach($csvFile as $index => $row){
+            var_dump($row);
+        }
         $clearedData = array(
             'controllerData' => array(),
             'codebasesData' => array()
@@ -40,6 +41,6 @@ class CodebaseServices
 //        }
 //
 //        return $clearedData;
-        return $sheetData;
+        return $clearedData;
     }
 } 
