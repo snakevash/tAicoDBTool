@@ -68,4 +68,9 @@ class CodeBaseConfig
      * @var string 内容起始行
      */
     public static $startLine = 4;
+
+    /**
+     * @var int 遥控器信息行
+     */
+    public static $controllerLine = 2;
 } 

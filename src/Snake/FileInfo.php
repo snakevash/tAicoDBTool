@@ -24,12 +24,27 @@ class FileInfo
 
         $tmpDir = dir($dir);
         while ($file = $tmpDir->read()) {
-            if (!(is_dir("$dir/$file")) && ($file != '.') && ($file != '..')) {
+            if (!(is_dir("$dir" . DIRECTORY_SEPARATOR . "$file")) && ($file != '.') && ($file != '..')) {
                 array_push($filesArray, "$dir/$file");
             }
         }
 
         $tmpDir->close();
         return $filesArray;
+    }
+
+    /**
+     * 移动处理过的红外代码
+     *
+     * @param $file
+     * @return bool
+     */
+    public static function rmCodeBaseFilePath($file){
+        $fileinfo = explode(DIRECTORY_SEPARATOR,$file);
+        $filename = array_pop($fileinfo);
+        $newname = \OtherConfig::CODEBASEAFTER . DIRECTORY_SEPARATOR . $filename;
+
+        $r = rename($file,$newname);
+        return $r;
     }
 } 

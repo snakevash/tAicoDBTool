@@ -9,10 +9,10 @@
 
 class CodebaseServicesTest extends PHPUnit_Framework_TestCase {
     public function testGetFileContent(){
-        $model = new \Snake\Services\CodebaseServices();
-        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE);
-        $data = $model->getFileContent($files[0]);
-        var_dump($data);
+//        $model = new \Snake\Services\CodebaseServices();
+//        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE);
+//        $data = $model->getFileContent($files[0]);
+//        var_dump($data);
     }
 }
  
