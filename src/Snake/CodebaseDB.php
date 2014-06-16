@@ -7,7 +7,7 @@
  * Time: 下午5:27
  */
 
-namespace Snake\Services;
+namespace Snake;
 
 
 class CodebaseDB {
@@ -62,6 +62,6 @@ class CodebaseDB {
         return $id;
     }
 
-    
+
 
 } 

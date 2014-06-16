@@ -21,5 +21,11 @@ class MyTest extends \PHPUnit_Framework_TestCase {
 //        $test = 'abc';
 //        $this->assertEquals('test',getVariableName($test),'获得变量名字');
     }
+
+    public function testRmFile(){
+//        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::CODEBASEBEFORE);
+//        $r = \Snake\FileInfo::rmCodeBaseFilePath($files[0]);
+//        var_dump($r);
+    }
 }
  

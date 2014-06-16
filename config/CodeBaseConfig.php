@@ -60,7 +60,7 @@ class CodeBaseConfig
         'CodeName' => '11',
         'CodeOrder' => '12',
         'CodeGroup' => '13',
-        'CodeDefaultIcon' => '14',
+        'CodeDefaultIcon' => '19',
         'DataBits' => '15'
     );
 

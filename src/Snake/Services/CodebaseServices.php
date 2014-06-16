@@ -10,7 +10,10 @@
 namespace Snake\Services;
 
 
+use Snake\BrandDB;
 use Snake\ControllerDB;
+use Snake\ControllerProtocolDB;
+use Snake\DeviceInfo;
 
 class CodebaseServices
 {
@@ -49,8 +52,11 @@ class CodebaseServices
 
                 $tmp = array();
                 foreach(\CodeBaseConfig::$codebaseConfig as $key => $value){
-                    $tmp[$key] = $row[$value];
+                    $tmp[$key] = str_replace(' ','',$row[$value]);
                 }
+
+                # 组装CodeKey
+                $tmp['CodeKey'] = $this->getCodeKey($tmp);
                 array_push($clearedData['codebasesData'],$tmp);
             }
 
@@ -59,54 +65,98 @@ class CodebaseServices
         return $clearedData;
     }
 
+    /**
+     * 获得组装好的真正代码
+     *
+     * @param $unit
+     * @return string
+     */
+    public function getCodeKey($unit){
+        $tmp = '';
+        $tmp .= empty($unit['ControllerProtocolFlag']) ? '' : $unit['ControllerProtocolFlag'];
+        $tmp .= empty($unit['RetransFrame']) ? '' : $unit['RetransFrame'];
+        $tmp .= empty($unit['TVFormat']) ? '' : $unit['TVFormat'];
+        $tmp .= empty($unit['CarrierCycle']) ? '' : $unit['CarrierCycle'];
+        $tmp .= empty($unit['DataCycle']) ? '' : $unit['DataCycle'];
+        $tmp .= empty($unit['CodeKeyTrue']) ? '' : $unit['CodeKeyTrue'];
+
+        return $tmp;
+    }
+
     public function runInsertCodebaseMain($file){
         # 数据库
         $db = new \medoo(\DBFileConfig::$dbinfo);
         # 清洗过的数据
         $data = $this->getFileContent($file);
         # 品牌ID
-        $CodeController = '';
+        $bdb = new BrandDB($db);
+        # 查表获得品牌ID
+        $CodeController = $bdb->getBrandID($data['controllerData']['ControllerBrand']);
         # 设备ID
-        $ControllerDevice = '1';
+        $ControllerDevice = DeviceInfo::$NameMap[$data['controllerData']['ControllerDevice']];
+        # 协议ID
+        $ControllerProtocol = 1;
+
+        # 协议录入部分
+        $cpdb = new ControllerProtocolDB($db);
+        foreach ($data['codebasesData'] as $index => $unit) {
+            $r = $cpdb->isInserted($unit['Protocol']);
+            if(!$r){
+                $cpdb->insert(
+                    $unit['Protocol'],
+                    $unit['UserCode'],
+                    $unit['ControllerProtocolFlag'],
+                    $unit['RetransFrame'],
+                    $unit['TVFormat'],
+                    $unit['CarrierCycle'],
+                    $unit['DataCycle'],
+                    $unit['DataBits']
+                );
+            }
+        }
+        # 数据记录该遥控器下面所有的协议名称
 
 
         # 把遥控器信息插入到数据库
         $cdb = new ControllerDB($db);
         $r = $cdb->isInserted($data['controllerData']['ControllerName']);
-        if($r){
+        if(!$r){
+            # 注意 HasNumber的特殊处理
             $CodeController = $cdb->insert(
-                $data['controllerData']['ControllerProtocol'],
+                $ControllerProtocol,
                 $data['controllerData']['ControllerType'],
                 $data['controllerData']['ControllerName'],
                 $data['controllerData']['ControllerSeries'],
-                $data['controllerData']['ControllerBrand'],
-                $data['controllerData']['ControllerDevice'],
-                $data['controllerData']['ControllerImages'],
-                $data['controllerData']['HasNumberPad']);
+                $CodeController,
+                $ControllerDevice,
+                'DefaultController',
+                $data['controllerData']['HasNumber'] == '有' ? 1 : 0);
         } else {
             # 已经录入过了
             return false;
         }
         # 把红外代码数据插入到数据库
         # todo 增加出错处理
-        $cbdb = new CodebaseDB($db);
+        $cbdb = new \Snake\CodebaseDB($db);
         foreach ($data['codebasesData'] as $index => $unit) {
             $r = $cbdb->insert(
-                $data['codebasesData']['CodeDisplayName'],
+                $unit['CodeDisplayName'],
                 $CodeController,
-                $data['codebasesData']['CodeName'],
-                $data['codebasesData']['CodeKey'],
-                $data['codebasesData']['CodeKeyTrue'],
-                $data['codebasesData']['CodeOrder'],
-                $data['codebasesData']['CodeDefaultIcon'],
-                $data['codebasesData']['CodeGroup'],
-                ($data['codebasesData']['CodeIsNeedIndex'] == "有") ? 1 : 0
+                $unit['CodeName'],
+                $unit['CodeKey'],
+                $unit['CodeKeyTrue'],
+                $unit['CodeOrder'],
+                $unit['CodeDefaultIcon'],
+                $unit['CodeGroup'],
+                0
             );
             if(!$r){
                 # 插入出错
                 return false;
             }
         }
+        $r = \Snake\FileInfo::rmCodeBaseFilePath($file);
+        return $r;
     }
 
     /**
