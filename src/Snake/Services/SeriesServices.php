@@ -109,7 +109,8 @@ class SeriesServices
                         $controllerID = $cdb->getControllerID($row['ControllerName']);
                         if($isExistedController){
                             $r = $tcsdb->isInserted($controllerID,$seriesID);
-                            if($r){
+                            if(!$r){
+                                $tcsdb->insert($controllerID,$seriesID);
                                 # todo 日志 成功
                             }else{
                                 # todo 日志 失败
@@ -135,6 +136,7 @@ class SeriesServices
                         if($isExistedController){
                             $r = $tcsdb->isInserted($controllerID,$seriesID);
                             if($r){
+                                $tcsdb->insert($controllerID,$seriesID);
                                 # todo 日志 成功
                             }else{
                                 # todo 日志 失败
