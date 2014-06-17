@@ -13,3 +13,11 @@ $sBrand = new \Snake\Services\BrandServices();
 $sfiles = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDS);
 $sBrand->runInsertBrandMain($sfiles[0]);
 
+# 导入所有的红外代码
+# 遍历codebasebefore下所有的红外代码
+$sCodeBaes = new \Snake\Services\CodebaseServices();
+$files = \Snake\FileInfo::getFilePathInfo(OtherConfig::CODEBASEBEFORE);
+foreach($files as $file){
+    $r = $sCodeBaes->runInsertCodebaseMain($files);
+}
+

@@ -43,14 +43,14 @@ class TControllerProtocol {
      * 是否建立过关系
      *
      * @param $ControllerID
-     * @param $Protocol
+     * @param $ProtocolID
      * @return bool
      */
-    public function isInserted($ControllerID,$Protocol){
+    public function isInserted($ControllerID,$ProtocolID){
         $r = $this->db->select('t_controller_protocol',"*",array(
             'AND'=>array(
                 'ControllerID'=>$ControllerID,
-                'Protocol'=>$Protocol
+                'ProtocolID'=>$ProtocolID
             )
         ));
         if(count($r) > 0){

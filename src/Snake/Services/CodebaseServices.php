@@ -11,9 +11,12 @@ namespace Snake\Services;
 
 
 use Snake\BrandDB;
+use Snake\CodebaseDB;
 use Snake\ControllerDB;
 use Snake\ControllerProtocolDB;
 use Snake\DeviceInfo;
+use Snake\FileInfo;
+use Snake\TControllerProtocol;
 
 class CodebaseServices
 {
@@ -93,9 +96,9 @@ class CodebaseServices
         # 品牌ID
         $bdb = new BrandDB($db);
         # 查表获得品牌ID
-        $CodeController = $bdb->getBrandID($data['controllerData']['ControllerBrand']);
+        $ControllerBrandID = $bdb->getBrandID($data['controllerData']['ControllerBrand']);
         # 设备ID
-        $ControllerDevice = DeviceInfo::$NameMap[$data['controllerData']['ControllerDevice']];
+        $ControllerDeviceID = DeviceInfo::$NameMap[$data['controllerData']['ControllerDevice']];
         # 协议ID
         $ControllerProtocol = 1;
         # 该遥控器下面所属的协议
@@ -105,6 +108,10 @@ class CodebaseServices
         # 数据记录该遥控器下面所有的协议名称
         $cpdb = new ControllerProtocolDB($db);
         foreach ($data['codebasesData'] as $index => $unit) {
+            # 过滤空的协议
+            if (empty($unit['Protocol'])) {
+                continue;
+            }
             $r = $cpdb->isInserted($unit['Protocol']);
             if (!$r) {
                 $tid = $cpdb->insert(
@@ -136,17 +143,19 @@ class CodebaseServices
                 $data['controllerData']['ControllerType'],
                 $data['controllerData']['ControllerName'],
                 $data['controllerData']['ControllerSeries'],
-                $CodeController,
-                $ControllerDevice,
-                'DefaultController',
+                $ControllerBrandID,
+                $ControllerDeviceID,
+                'defaultcontrollericon',
                 $data['controllerData']['HasNumber'] == '有' ? 1 : 0);
 
-            
+            $tcpdb = new TControllerProtocol($db);
             # 维护关系表
             foreach ($hasProtocol as $index => $value) {
-
+                $r = $tcpdb->isInserted($CodeController, $value);
+                if (!$r) {
+                    $tcpdb->insert($CodeController, $value);
+                }
             }
-
         } else {
             # 已经录入过了
             return false;
@@ -155,7 +164,7 @@ class CodebaseServices
 
         # 把红外代码数据插入到数据库
         # todo 增加出错处理
-        $cbdb = new \Snake\CodebaseDB($db);
+        $cbdb = new CodebaseDB($db);
         foreach ($data['codebasesData'] as $index => $unit) {
             $r = $cbdb->insert(
                 $unit['CodeDisplayName'],
@@ -173,7 +182,7 @@ class CodebaseServices
                 return false;
             }
         }
-        $r = \Snake\FileInfo::rmCodeBaseFilePath($file);
+        $r = FileInfo::rmCodeBaseFilePath($file);
         return $r;
     }
 

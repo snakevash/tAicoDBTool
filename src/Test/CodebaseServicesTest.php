@@ -16,10 +16,10 @@ class CodebaseServicesTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testRunInsertCodebaseMain(){
-        $model = new \Snake\Services\CodebaseServices();
-        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::CODEBASEBEFORE);
-        $r = $model->runInsertCodebaseMain($files[0]);
-        $this->assertTrue($r,'导入红外代码库');
+//        $model = new \Snake\Services\CodebaseServices();
+//        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::CODEBASEBEFORE);
+//        $r = $model->runInsertCodebaseMain($files[0]);
+//        $this->assertTrue($r,'导入红外代码库');
     }
 }
  
