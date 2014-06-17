@@ -47,4 +47,19 @@ class FileInfo
         $r = rename($file,$newname);
         return $r;
     }
+
+    /**
+     * 移动处理过的系列文件
+     *
+     * @param $file
+     * @return bool
+     */
+    public static function rmSeriesFilePath($file){
+        $fileinfo = explode(DIRECTORY_SEPARATOR,$file);
+        $filename = array_pop($fileinfo);
+        $newname = \OtherConfig::BRANDAFTER . DIRECTORY_SEPARATOR . $filename;
+
+        $r = rename($file,$newname);
+        return $r;
+    }
 } 
