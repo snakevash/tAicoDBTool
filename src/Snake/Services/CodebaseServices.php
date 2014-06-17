@@ -32,11 +32,11 @@ class CodebaseServices
         );
 
         # 读取表单数据
-        foreach($csvFile as $index => $row){
+        foreach ($csvFile as $index => $row) {
             # 读取红外代码所属遥控器
-            if($index == \CodeBaseConfig::$controllerLine){
+            if ($index == \CodeBaseConfig::$controllerLine) {
                 $tmp = array();
-                foreach(\CodeBaseConfig::$controllerConfig as $key => $value){
+                foreach (\CodeBaseConfig::$controllerConfig as $key => $value) {
                     $tmp[$key] = $row[$value['X']];
                 }
 
@@ -44,20 +44,20 @@ class CodebaseServices
             }
 
             # 读取红外代码行
-            if($index >= \CodeBaseConfig::$startLine){
+            if ($index >= \CodeBaseConfig::$startLine) {
                 # 判断是否已经属于空值
-                if(empty($row[1])){
+                if (empty($row[1])) {
                     break;
                 }
 
                 $tmp = array();
-                foreach(\CodeBaseConfig::$codebaseConfig as $key => $value){
-                    $tmp[$key] = str_replace(' ','',$row[$value]);
+                foreach (\CodeBaseConfig::$codebaseConfig as $key => $value) {
+                    $tmp[$key] = str_replace(' ', '', $row[$value]);
                 }
 
                 # 组装CodeKey
                 $tmp['CodeKey'] = $this->getCodeKey($tmp);
-                array_push($clearedData['codebasesData'],$tmp);
+                array_push($clearedData['codebasesData'], $tmp);
             }
 
         }
@@ -71,7 +71,8 @@ class CodebaseServices
      * @param $unit
      * @return string
      */
-    public function getCodeKey($unit){
+    public function getCodeKey($unit)
+    {
         $tmp = '';
         $tmp .= empty($unit['ControllerProtocolFlag']) ? '' : $unit['ControllerProtocolFlag'];
         $tmp .= empty($unit['RetransFrame']) ? '' : $unit['RetransFrame'];
@@ -83,7 +84,8 @@ class CodebaseServices
         return $tmp;
     }
 
-    public function runInsertCodebaseMain($file){
+    public function runInsertCodebaseMain($file)
+    {
         # 数据库
         $db = new \medoo(\DBFileConfig::$dbinfo);
         # 清洗过的数据
@@ -100,11 +102,12 @@ class CodebaseServices
         $hasProtocol = array();
 
         # 协议录入部分
+        # 数据记录该遥控器下面所有的协议名称
         $cpdb = new ControllerProtocolDB($db);
         foreach ($data['codebasesData'] as $index => $unit) {
             $r = $cpdb->isInserted($unit['Protocol']);
-            if(!$r){
-                $cpdb->insert(
+            if (!$r) {
+                $tid = $cpdb->insert(
                     $unit['Protocol'],
                     $unit['UserCode'],
                     $unit['ControllerProtocolFlag'],
@@ -114,18 +117,22 @@ class CodebaseServices
                     $unit['DataCycle'],
                     $unit['DataBits']
                 );
+                array_push($hasProtocol, $tid);
+            } else {
+                $tid = $cpdb->getProtocolID($unit['Protocol']);
+                array_push($hasProtocol, $tid);
             }
         }
-        # 数据记录该遥控器下面所有的协议名称
+        # todo 清理数组中重复的数据
 
 
         # 把遥控器信息插入到数据库
         $cdb = new ControllerDB($db);
         $r = $cdb->isInserted($data['controllerData']['ControllerName']);
-        if(!$r){
+        if (!$r) {
             # 注意 HasNumber的特殊处理
             $CodeController = $cdb->insert(
-                $ControllerProtocol,
+                '', # 由于有关系表 这个值被留空
                 $data['controllerData']['ControllerType'],
                 $data['controllerData']['ControllerName'],
                 $data['controllerData']['ControllerSeries'],
@@ -133,10 +140,19 @@ class CodebaseServices
                 $ControllerDevice,
                 'DefaultController',
                 $data['controllerData']['HasNumber'] == '有' ? 1 : 0);
+
+            
+            # 维护关系表
+            foreach ($hasProtocol as $index => $value) {
+
+            }
+
         } else {
             # 已经录入过了
             return false;
         }
+
+
         # 把红外代码数据插入到数据库
         # todo 增加出错处理
         $cbdb = new \Snake\CodebaseDB($db);
@@ -152,7 +168,7 @@ class CodebaseServices
                 $unit['CodeGroup'],
                 0
             );
-            if(!$r){
+            if (!$r) {
                 # 插入出错
                 return false;
             }
@@ -181,7 +197,8 @@ class CodebaseServices
         $ControllerDevice = '',
         $ControllerImage = '',
         $HasNumber = '',
-        $success = 1){
+        $success = 1)
+    {
         echo date('Y-m-d H:i:s') . ' ';
         echo '遥控器类型=' . (empty($ControllerType) ? 'null' : $ControllerType) . ' ';
         echo '遥控器名称=' . (empty($ControllerName) ? 'null' : $ControllerName) . ' ';
@@ -191,13 +208,13 @@ class CodebaseServices
         echo '遥控器图片=' . (empty($ControllerImage) ? 'null' : $ControllerImage) . ' ';
         echo '是否有数字键盘' . (empty($HasNumber) ? 'null' : $HasNumber) . ' ';
 
-        if($success == 1){
+        if ($success == 1) {
             echo '执行成功';
         }
-        if($success == 2){
+        if ($success == 2) {
             echo '执行失败';
         }
-        if($success == 3){
+        if ($success == 3) {
             echo '重复执行';
         }
 
@@ -240,7 +257,8 @@ class CodebaseServices
         $CodeGroup = '',
         $CodeDefaultIcon = '',
         $DataBits = '',
-        $success = 1){
+        $success = 1)
+    {
         echo date('Y-m-d H:i:s') . ' ';
         echo '按键显示的名称=' . (empty($CodeDisplayName) ? 'null' : $CodeDisplayName) . ' ';
         echo '协议名称=' . (empty($Protocol) ? 'null' : $Protocol) . ' ';
@@ -259,13 +277,13 @@ class CodebaseServices
         echo '按键默认的图标=' . (empty($CodeDefaultIcon) ? 'null' : $CodeDefaultIcon);
         echo '数据位数=' . (empty($DataBits) ? 'null' : $DataBits);
 
-        if($success == 1){
+        if ($success == 1) {
             echo '执行成功';
         }
-        if($success == 2){
+        if ($success == 2) {
             echo '执行失败';
         }
-        if($success == 3){
+        if ($success == 3) {
             echo '重复执行';
         }
 
