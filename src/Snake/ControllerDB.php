@@ -77,5 +77,20 @@ class ControllerDB {
         }
     }
 
-
+    /**
+     * 获得遥控器ID
+     *
+     * @param $ControllerNameß
+     * @return bool
+     */
+    public function getControllerID($ControllerNameß){
+        $r = $this->db->select('controller', '*', array(
+            'ControllerName' => $ControllerNameß
+        ));
+        if (count($r) > 0) {
+            return $r[0]['ControllerID'];
+        } else {
+            return false;
+        }
+    }
 } 
