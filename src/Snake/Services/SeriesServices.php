@@ -27,6 +27,10 @@ class SeriesServices
                 foreach(\SeriesConfig::$fileConfig as $key => $value){
                     $tmp[$key] = $row[$value];
                 }
+                # 过滤数据
+                $tmpSeriesString = str_replace(' ','',$tmp['SeriesString']);
+                # 如果
+
                 array_push($clearedData,$tmp);
             }
         }
