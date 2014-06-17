@@ -96,6 +96,8 @@ class CodebaseServices
         $ControllerDevice = DeviceInfo::$NameMap[$data['controllerData']['ControllerDevice']];
         # 协议ID
         $ControllerProtocol = 1;
+        # 该遥控器下面所属的协议
+        $hasProtocol = array();
 
         # 协议录入部分
         $cpdb = new ControllerProtocolDB($db);
