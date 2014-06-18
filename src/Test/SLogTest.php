@@ -23,8 +23,11 @@ class SLogTest extends PHPUnit_Framework_TestCase
 
     public function testWriteLog()
     {
-        $filename = OtherConfig::LOGS . DIRECTORY_SEPARATOR . "test" . DIRECTORY_SEPARATOR . 'testA.txt';
-        \Snake\Services\SLog::writeLog($filename, array());
+//        $filename = OtherConfig::LOGS . DIRECTORY_SEPARATOR . "test" . DIRECTORY_SEPARATOR . 'testA.txt';
+//        $r = \Snake\Services\SLog::writeLog($filename, '测试测试',array(
+//            'ControllerID'=>'1'
+//        ));
+//        $this->assertTrue($r,'测试写日志函数');
     }
 }
  

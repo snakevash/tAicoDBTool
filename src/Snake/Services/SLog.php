@@ -70,23 +70,28 @@ class SLog
         }
     }
 
-
-    public static function writeLog($filename, array $arrLog = array())
+    /**
+     * 写日志
+     *
+     * @param $modulename
+     * @param string $message
+     * @param array $arrLog
+     * @return bool
+     */
+    public static function writeLog($modulename, $message = '', array $arrLog = array())
     {
-        $log = new Logger('SnakeLog');
-        $log->pushHandler(new StreamHandler($filename,Logger::DEBUG));
-        $log->pushProcessor(function($record){
-            $record['extra']['dummy'] = array(
-                'aaa'=>'bbb',
-                'ccc'=>'ddd'
-            );
-            return $record;
-        });
-        $log->addInfo('这里是测试bbbb',array(
-            'a'=>'b',
-            'c'=>'d',
-            'e'=>'f'
-        ));
-        $ps = $log->getProcessors();
+        # 如果文件不存在 创建文件
+        if (!file_exists($modulename)) {
+            @touch($modulename);
+        }
+
+        # 得到文件名
+        $fileTrueName = array_shift(explode('.',array_pop(explode(DIRECTORY_SEPARATOR, $modulename))));
+
+
+        $log = new Logger($fileTrueName);
+        $log->pushHandler(new StreamHandler($modulename, Logger::DEBUG));
+        $r = $log->addInfo($message, $arrLog);
+        return $r;
     }
 }
