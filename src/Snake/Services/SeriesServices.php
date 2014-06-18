@@ -128,7 +128,7 @@ class SeriesServices
 
                         # 如果是之前已经录入过的系列 那么获得系列ID
                         if(empty($seriesID)){
-                            $seriesID = $sdb->getSeriesID($SeriesString);
+                            $seriesID = $sdb->getSeriesID($row['SeriesString']);
                         }
 
                         # 如果存在遥控器 而且 他们没有建立关系
