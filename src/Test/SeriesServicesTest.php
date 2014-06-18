@@ -17,10 +17,10 @@ class SeriesServicesTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testRunInsertSeriesMain(){
-        $model = new \Snake\Services\SeriesServices();
-        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE);
-        $data = $model->runInsertSeriesMain($files[0]);
-        var_dump($data);
+//        $model = new \Snake\Services\SeriesServices();
+//        $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE);
+//        $data = $model->runInsertSeriesMain($files[0]);
+//        var_dump($data);
     }
 }
  

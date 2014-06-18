@@ -38,6 +38,11 @@ class OtherConfig
      * 日志文件夹
      */
     const LOGS = './logs';
+
+    /**
+     * 临时文件
+     */
+    const INIFile = 'snakeini.txt';
 }
 
 /**
