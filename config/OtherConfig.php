@@ -33,6 +33,11 @@ class OtherConfig
      * 所有品牌的单独文件
      */
     const BRANDS = './brands';
+
+    /**
+     * 日志文件夹
+     */
+    const LOGS = './logs';
 }
 
 /**

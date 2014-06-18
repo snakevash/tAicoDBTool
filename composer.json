@@ -11,7 +11,8 @@
     "require": {
         "phpoffice/phpexcel": "1.8.0",
         "catfan/medoo":"v0.9.6",
-        "keboola/csv":"1.1.3"
+        "keboola/csv":"1.1.3",
+        "monolog/monolog":"1.10.0"
     },
     "autoload":{
         "psr-0":{

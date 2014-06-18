@@ -87,6 +87,12 @@ class CodebaseServices
         return $tmp;
     }
 
+    /**
+     * 插入红外代码数据库
+     *
+     * @param $file string 红外代码文件
+     * @return array|bool
+     */
     public function runInsertCodebaseMain($file)
     {
         # 数据库
@@ -100,6 +106,7 @@ class CodebaseServices
         # 设备ID
         $ControllerDeviceID = DeviceInfo::$NameMap[$data['controllerData']['ControllerDevice']];
         # 协议ID
+        # todo 协议id是根据协议代码库查询的
         $ControllerProtocol = 1;
         # 该遥控器下面所属的协议
         $hasProtocol = array();
@@ -112,7 +119,9 @@ class CodebaseServices
             if (empty($unit['Protocol'])) {
                 continue;
             }
+            # 是否存在该协议
             $r = $cpdb->isInserted($unit['Protocol']);
+            # 不存在该协议就插入数据库
             if (!$r) {
                 $tid = $cpdb->insert(
                     $unit['Protocol'],
@@ -124,6 +133,7 @@ class CodebaseServices
                     $unit['DataCycle'],
                     $unit['DataBits']
                 );
+                # todo 插入协议数据日志
                 array_push($hasProtocol, $tid);
             } else {
                 $tid = $cpdb->getProtocolID($unit['Protocol']);
@@ -131,7 +141,6 @@ class CodebaseServices
             }
         }
         # todo 清理数组中重复的数据
-
 
         # 把遥控器信息插入到数据库
         $cdb = new ControllerDB($db);
@@ -152,6 +161,7 @@ class CodebaseServices
             # 维护关系表
             foreach ($hasProtocol as $index => $value) {
                 $r = $tcpdb->isInserted($CodeController, $value);
+                # todo 维护遥控器-协议关系表日志
                 if (!$r) {
                     $tcpdb->insert($CodeController, $value);
                 }
