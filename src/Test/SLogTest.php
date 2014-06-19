@@ -29,5 +29,17 @@ class SLogTest extends PHPUnit_Framework_TestCase
 //        ));
 //        $this->assertTrue($r,'测试写日志函数');
     }
+
+    public function testGetCurrentIsFinished(){
+//        $dirName = \Snake\Services\SLog::createOneDir();
+//        $fileName = $dirName . DIRECTORY_SEPARATOR . \Snake\Services\SLog::BRANDLOG;
+//        $r = \Snake\Services\SLog::writeINIFile($fileName);
+//        $r = \Snake\Services\SLog::getCurrentIsFinished();
+//        $this->assertFalse($r,'测试获得当前是否完成');
+    }
+
+    public function testABC(){
+        $this->assertFalse(false,'clearCache');
+    }
 }
  

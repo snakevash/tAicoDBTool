@@ -15,6 +15,13 @@ use Monolog\Logger;
 
 class SLog
 {
+    /**
+     * 日志模块名称
+     */
+    const BRANDLOG = 'BrandModule';
+    const CODEBASELOG = 'CodebaseModule';
+    const CONTROLLERLOG = 'ControllerModule';
+    const SERIESLOG = 'SeriesModule';
 
     /**
      * 创建一个由时间命名的文件夹
@@ -33,8 +40,8 @@ class SLog
     /**
      * 保存中间结果到文件
      *
-     * @param $currentFile
-     * @param bool $flag
+     * @param string $currentFile 当前日志文件的文件目录/文件名称
+     * @param bool $flag 完成度
      * @return bool
      */
     public static function writeINIFile($currentFile, $flag = false)
@@ -88,10 +95,26 @@ class SLog
         # 得到文件名
         $fileTrueName = array_shift(explode('.',array_pop(explode(DIRECTORY_SEPARATOR, $modulename))));
 
-
         $log = new Logger($fileTrueName);
         $log->pushHandler(new StreamHandler($modulename, Logger::DEBUG));
         $r = $log->addInfo($message, $arrLog);
         return $r;
+    }
+
+    /**
+     * 当前文件是否完成
+     *
+     * @return bool
+     */
+    public static function getCurrentIsFinished(){
+        $file = \OtherConfig::LOGS . DIRECTORY_SEPARATOR . \OtherConfig::INIFile;
+
+        if(file_exists($file)){
+            $content = file_get_contents($file);
+            $content = json_decode($content,true);
+            return $content['current']['isFinished'];
+        }else{
+            return false;
+        }
     }
 }
