@@ -19,12 +19,12 @@ require_once 'vendor/autoload.php';
 //$sCodeBaes = new \Snake\Services\CodebaseServices();
 //$files = \Snake\FileInfo::getFilePathInfo(OtherConfig::CODEBASEBEFORE);
 //foreach($files as $file){
-//    $r = $sCodeBaes->runInsertCodebaseMain($files);
+//    $r = $sCodeBaes->runInsertCodebaseMain($file);
 //}
 
 # 导入系列
-$sSeries = new \Snake\Services\SeriesServices();
-$sfiles = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE);
-foreach($sfiles as $file){
-    $r = $sSeries->runInsertSeriesMain($file);
-}
+//$sSeries = new \Snake\Services\SeriesServices();
+//$sfiles = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDBEFORE);
+//foreach($sfiles as $file){
+//    $r = $sSeries->runInsertSeriesMain($file);
+//}
