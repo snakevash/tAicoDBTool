@@ -41,7 +41,7 @@ class SLogTest extends PHPUnit_Framework_TestCase
 
     public function testABC()
     {
-//        $this->assertFalse(false,'clearCache');
+        $this->assertFalse(false, 'clearCache');
     }
 }
  

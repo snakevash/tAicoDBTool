@@ -2,7 +2,7 @@
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
          bootstrap="bootstrap/autoload.php"
-         colors="false"
+         colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
@@ -11,8 +11,8 @@
          syntaxCheck="true"
         >
     <testsuites>
-        <testsuite name="tAico">
-            <directory suffix=".php">./src/Test/</directory>
+        <testsuite name="tAicoDBTool">
+            <directory>./src/Test/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
