@@ -49,7 +49,7 @@ class CodebaseServices
             # 读取红外代码行
             if ($index >= \CodeBaseConfig::$startLine) {
                 # 判断是否已经属于空值
-                if (empty($row[1])) {
+                if (empty($row[1]) && $row[1] != "0") {
                     break;
                 }
 
@@ -116,7 +116,7 @@ class CodebaseServices
         $cpdb = new ControllerProtocolDB($db);
         foreach ($data['codebasesData'] as $index => $unit) {
             # 过滤空的协议
-            if (empty($unit['Protocol'])) {
+            if (empty($unit['Protocol']) && $unit['Protocol'] != "0") {
                 continue;
             }
             # 是否存在该协议
