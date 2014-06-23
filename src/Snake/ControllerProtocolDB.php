@@ -28,7 +28,6 @@ class ControllerProtocolDB
      * 插入一条协议
      *
      * @param string $Protocol
-     * @param string $UserCode
      * @param string $ControllerProtocolFlag
      * @param string $RetransFrame
      * @param string $TVFormat
@@ -39,7 +38,7 @@ class ControllerProtocolDB
      */
     public function insert(
         $Protocol = '',
-        $UserCode = '',
+        #$UserCode = '',
         $ControllerProtocolFlag = '',
         $RetransFrame = '',
         $TVFormat = '',
@@ -49,7 +48,7 @@ class ControllerProtocolDB
     {
         $id = $this->db->insert('controller_protocol', array(
             'Protocol' => $Protocol,
-            'UserCode' => $UserCode,
+            #'UserCode' => $UserCode,
             'ControllerProtocolFlag' => $ControllerProtocolFlag,
             'RetransFrame' => $RetransFrame,
             'TVFormat' => $TVFormat,
@@ -67,7 +66,8 @@ class ControllerProtocolDB
      * @param $Protocol
      * @return bool
      */
-    public function isInserted($Protocol){
+    public function isInserted($Protocol)
+    {
         $r = $this->db->select('controller_protocol', '*', array('Protocol' => $Protocol));
         if (count($r) > 0) {
             return true;
@@ -82,11 +82,12 @@ class ControllerProtocolDB
      * @param $Protocol
      * @return bool
      */
-    public function getProtocolID($Protocol){
-        $r = $this->db->select('controller_protocol','*',array('Protocol' => $Protocol));
-        if(count($r) > 0){
+    public function getProtocolID($Protocol)
+    {
+        $r = $this->db->select('controller_protocol', '*', array('Protocol' => $Protocol));
+        if (count($r) > 0) {
             return $r[0]['ProtocolID'];
-        }else{
+        } else {
             return false;
         }
     }

@@ -125,7 +125,7 @@ class CodebaseServices
             if (!$r) {
                 $tid = $cpdb->insert(
                     $unit['Protocol'],
-                    $unit['UserCode'],
+                    #$unit['UserCode'],
                     $unit['ControllerProtocolFlag'],
                     $unit['RetransFrame'],
                     $unit['TVFormat'],
@@ -179,6 +179,7 @@ class CodebaseServices
             $r = $cbdb->insert(
                 $unit['CodeDisplayName'],
                 $CodeController,
+                $unit['UserCode'],
                 $unit['CodeName'],
                 $unit['CodeKey'],
                 $unit['CodeKeyTrue'],

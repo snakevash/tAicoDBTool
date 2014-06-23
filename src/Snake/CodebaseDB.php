@@ -10,7 +10,8 @@
 namespace Snake;
 
 
-class CodebaseDB {
+class CodebaseDB
+{
     private $db;
 
     /**
@@ -28,6 +29,7 @@ class CodebaseDB {
      *
      * @param $CodeDisplayName
      * @param $CodeController
+     * @param $UserCode
      * @param $CodeName
      * @param $CodeKey
      * @param $CodeKeyTrue
@@ -40,28 +42,30 @@ class CodebaseDB {
     public function insert(
         $CodeDisplayName,
         $CodeController,
+        $UserCode,
         $CodeName,
         $CodeKey,
         $CodeKeyTrue,
         $CodeOrder,
         $CodeDefaultIcon,
         $CodeGroup,
-        $CodeIsNeedIndex){
-        $id = $this->db->insert('codebase',array(
-            'CodeDisplayName'=>$CodeDisplayName,
-            'CodeController'=>$CodeController,
-            'CodeName'=>$CodeName,
-            'CodeKey'=>$CodeKey,
-            'CodeKeyTrue'=>$CodeKeyTrue,
-            'CodeOrder'=>$CodeOrder,
-            'CodeDefaultIcon'=>$CodeDefaultIcon,
-            'CodeGroup'=>$CodeGroup,
-            'CodeIsNeedIndex'=>$CodeIsNeedIndex
+        $CodeIsNeedIndex)
+    {
+        $id = $this->db->insert('codebase', array(
+            'CodeDisplayName' => $CodeDisplayName,
+            'CodeController' => $CodeController,
+            'UserCode' => $UserCode,
+            'CodeName' => $CodeName,
+            'CodeKey' => $CodeKey,
+            'CodeKeyTrue' => $CodeKeyTrue,
+            'CodeOrder' => $CodeOrder,
+            'CodeDefaultIcon' => $CodeDefaultIcon,
+            'CodeGroup' => $CodeGroup,
+            'CodeIsNeedIndex' => $CodeIsNeedIndex
         ));
 
         return $id;
     }
 
 
-
-} 
+}
