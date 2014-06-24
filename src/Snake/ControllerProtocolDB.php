@@ -46,7 +46,7 @@ class ControllerProtocolDB
         $DataCycle = '',
         $DataBits = '')
     {
-        $id = $this->db->insert('controller_protocol', array(
+        $id = $this->db->insert('protocol', array(
             'Protocol' => $Protocol,
             #'UserCode' => $UserCode,
             'ControllerProtocolFlag' => $ControllerProtocolFlag,
@@ -68,7 +68,7 @@ class ControllerProtocolDB
      */
     public function isInserted($Protocol)
     {
-        $r = $this->db->select('controller_protocol', '*', array('Protocol' => $Protocol));
+        $r = $this->db->select('protocol', '*', array('Protocol' => $Protocol));
         if (count($r) > 0) {
             return true;
         } else {
@@ -84,7 +84,7 @@ class ControllerProtocolDB
      */
     public function getProtocolID($Protocol)
     {
-        $r = $this->db->select('controller_protocol', '*', array('Protocol' => $Protocol));
+        $r = $this->db->select('protocol', '*', array('Protocol' => $Protocol));
         if (count($r) > 0) {
             return $r[0]['ProtocolID'];
         } else {
