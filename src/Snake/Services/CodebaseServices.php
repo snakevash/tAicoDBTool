@@ -40,7 +40,7 @@ class CodebaseServices
             if ($index == \CodeBaseConfig::$controllerLine) {
                 $tmp = array();
                 foreach (\CodeBaseConfig::$controllerConfig as $key => $value) {
-                    $tmp[$key] = $row[$value['X']];
+                    $tmp[$key] = trim($row[$value['X']]);
                 }
 
                 $clearedData['controllerData'] = $tmp;
@@ -55,7 +55,7 @@ class CodebaseServices
 
                 $tmp = array();
                 foreach (\CodeBaseConfig::$codebaseConfig as $key => $value) {
-                    $tmp[$key] = str_replace(' ', '', $row[$value]);
+                    $tmp[$key] = trim(str_replace(' ', '', $row[$value]));
                 }
 
                 # 组装CodeKey
@@ -107,7 +107,6 @@ class CodebaseServices
         $ControllerDeviceID = DeviceInfo::$NameMap[$data['controllerData']['ControllerDevice']];
         # 协议ID
         # todo 协议id是根据协议代码库查询的
-        $ControllerProtocol = 1;
         # 该遥控器下面所属的协议
         $hasProtocol = array();
 

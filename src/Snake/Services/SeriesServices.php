@@ -40,7 +40,7 @@ class SeriesServices
                     $tmp[$key] = $row[$value];
                 }
                 # 过滤数据
-                $tmpSeriesString = str_replace(' ', '', $tmp['SeriesString']);
+                $tmpSeriesString = trim(str_replace(' ', '', $tmp['SeriesString']));
                 # 检查是否存在中文都好和英文逗号
                 $chars = array(',', '，');
                 $tmpSeriesStringArr = ''; # 初始化系列数组
@@ -71,6 +71,7 @@ class SeriesServices
         $cdb = new ControllerDB($db);
         $tcsdb = new TControllerSeries($db);
         foreach ($data as $row) {
+            # todo 使用英文匹配 而非中文匹配
             if (empty($row['DisplayNameCN'])) {
                 continue;
             }
