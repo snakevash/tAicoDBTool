@@ -15,52 +15,52 @@ class BrandConfig
     public static $brands = array(
         'TV' => array(
             'startline' => 2,
-            'endline' => 56,
+            'endline' => 55,
             'DeviceID' => 2
         ),
         'Aircon' => array(
-            'startline' => 59,
-            'endline' => 89,
+            'startline' => 57,
+            'endline' => 86,
             'DeviceID' => 4
         ),
         'STB' => array(
-            'startline' => 95,
-            'endline' => 387,
+            'startline' => 92,
+            'endline' => 360,
             'DeviceID' => 6
         ),
         'DVD' => array(
-            'startline' => 407,
-            'endline' => 433,
+            'startline' => 388,
+            'endline' => 414,
             'DeviceID' => 10
         ),
         'Amp' => array(
-            'startline' => 437,
-            'endline' => 474,
+            'startline' => 418,
+            'endline' => 455,
             'DeviceID' => 8
         ),
         'Projector' => array(
-            'startline' => 478,
-            'endline' => 535,
+            'startline' => 459,
+            'endline' => 516,
             'DeviceID' => 12
         ),
         'Screeen' => array(
-            'startline' => 537,
-            'endline' => 549,
+            'startline' => 518,
+            'endline' => 530,
             'DeviceID' => 24
         ),
         'Hifi' => array(
-            'startline' => 552,
-            'endline' => 627,
+            'startline' => 533,
+            'endline' => 608,
             'DeviceID' => 20
         ),
         'Camera' => array(
-            'startline' => 632,
-            'endline' => 634,
+            'startline' => 613,
+            'endline' => 615,
             'DeviceID' => 22
         ),
         'Fan' => array(
-            'startline' => 641,
-            'endline' => 675,
+            'startline' => 622,
+            'endline' => 656,
             'DeviceID' => 16
         )
     );
