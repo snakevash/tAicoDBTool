@@ -43,6 +43,7 @@ class BrandDB
         $Country = 0,
         $BrandWebSite = '')
     {
+        $BrandName = strtoupper($BrandName);
         $id = $this->db->insert('brand', array(
             'BrandName' => $BrandName,
             'BrandShortName' => $BrandShortName,
