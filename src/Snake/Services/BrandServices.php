@@ -72,9 +72,9 @@ class BrandServices
 
                 # 首先插入Brand信息
                 # 判断品牌是否已经插入过
-                if ($dbmodel->isInserted($DisplayNameCN)) {
+                if ($dbmodel->isInsertedByEN($BrandName)) {
                     # 获得BrandID
-                    $BrandID = $dbmodel->getBrandID($DisplayNameCN);
+                    $BrandID = $dbmodel->getBrandIDByEn($BrandName);
                     # 查看BrandID和DeviceID是否已经插入
                     if ($dbmodel->isInsertedTDeviceBrand($BrandID, $DeviceID)) {
                         # 如果插入了就什么就不用管了

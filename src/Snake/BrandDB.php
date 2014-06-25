@@ -73,6 +73,22 @@ class BrandDB
     }
 
     /**
+     * 品牌是否已经存在数据库
+     *
+     * @param string $BrandName 英文版本
+     * @return bool
+     */
+    public function isInsertedByEN($BrandName)
+    {
+        $r = $this->db->select('brand', '*', array('BrandName' => $BrandName));
+        if (count($r) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 获得品牌的ID
      *
      * @param $DisplayNameCN
@@ -82,6 +98,24 @@ class BrandDB
     {
         $r = $this->db->select('brand', '*', array(
             'DisplayNameCN' => $DisplayNameCN
+        ));
+        if (count($r) > 0) {
+            return $r[0]['BrandID'];
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 获得品牌的ID
+     *
+     * @param string $BrandName 英文
+     * @return bool
+     */
+    public function getBrandIDByEn($BrandName)
+    {
+        $r = $this->db->select('brand', '*', array(
+            'BrandName' => $BrandName
         ));
         if (count($r) > 0) {
             return $r[0]['BrandID'];
