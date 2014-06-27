@@ -101,8 +101,8 @@ class CodebaseServices
         $data = $this->getFileContent($file);
         # 品牌ID
         $bdb = new BrandDB($db);
-        # 查表获得品牌ID
-        $ControllerBrandID = $bdb->getBrandID($data['controllerData']['ControllerBrand']);
+        # 查表获得品牌ID 用英文来匹配
+        $ControllerBrandID = $bdb->getBrandIDByEn(strtoupper($data['controllerData']['ControllerBrand']));
         # 设备ID
         $ControllerDeviceID = DeviceInfo::$NameMap[$data['controllerData']['ControllerDevice']];
         # 协议ID
@@ -123,14 +123,14 @@ class CodebaseServices
             # 不存在该协议就插入数据库
             if (!$r) {
                 $tid = $cpdb->insert(
-                    $unit['Protocol'],
+                    trim($unit['Protocol']),
                     #$unit['UserCode'],
-                    $unit['ControllerProtocolFlag'],
-                    $unit['RetransFrame'],
-                    $unit['TVFormat'],
-                    $unit['CarrierCycle'],
-                    $unit['DataCycle'],
-                    $unit['DataBits']
+                    trim($unit['ControllerProtocolFlag']),
+                    trim($unit['RetransFrame']),
+                    trim($unit['TVFormat']),
+                    trim($unit['CarrierCycle']),
+                    trim($unit['DataCycle']),
+                    trim($unit['DataBits'])
                 );
                 # todo 插入协议数据日志
                 array_push($hasProtocol, $tid);
@@ -140,6 +140,7 @@ class CodebaseServices
             }
         }
         # todo 清理数组中重复的数据
+        # todo 根据遥控器名称 品牌 设备 来判断
 
         # 把遥控器信息插入到数据库
         $cdb = new ControllerDB($db);
@@ -148,11 +149,11 @@ class CodebaseServices
             # 注意 HasNumber的特殊处理
             $CodeController = $cdb->insert(
                 '', # 由于有关系表 这个值被留空
-                $data['controllerData']['ControllerType'],
-                $data['controllerData']['ControllerName'],
-                $data['controllerData']['ControllerSeries'],
-                $ControllerBrandID,
-                $ControllerDeviceID,
+                trim($data['controllerData']['ControllerType']),
+                trim($data['controllerData']['ControllerName']),
+                trim($data['controllerData']['ControllerSeries']),
+                trim($ControllerBrandID),
+                trim($ControllerDeviceID),
                 'defaultcontrollericon',
                 $data['controllerData']['HasNumber'] == '有' ? 1 : 0);
 
@@ -176,15 +177,15 @@ class CodebaseServices
         $cbdb = new CodebaseDB($db);
         foreach ($data['codebasesData'] as $index => $unit) {
             $r = $cbdb->insert(
-                $unit['CodeDisplayName'],
+                trim($unit['CodeDisplayName']),
                 $CodeController,
-                $unit['UserCode'],
-                $unit['CodeName'],
-                $unit['CodeKey'],
-                $unit['CodeKeyTrue'],
-                $unit['CodeOrder'],
-                $unit['CodeDefaultIcon'],
-                $unit['CodeGroup'],
+                trim($unit['UserCode']),
+                trim($unit['CodeName']),
+                trim($unit['CodeKey']),
+                trim($unit['CodeKeyTrue']),
+                trim($unit['CodeOrder']),
+                trim($unit['CodeDefaultIcon']),
+                trim($unit['CodeGroup']),
                 0
             );
             if (!$r) {

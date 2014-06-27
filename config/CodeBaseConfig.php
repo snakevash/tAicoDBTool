@@ -40,6 +40,10 @@ class CodeBaseConfig
         'HasNumber' => array(
             'Y' => '2',
             'X' => '7'
+        ),
+        'SourceFrom' => array(
+            'Y' => '2',
+            'X' => '8'
         )
     );
 

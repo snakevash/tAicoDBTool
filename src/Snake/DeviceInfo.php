@@ -33,7 +33,7 @@ class DeviceInfo
         'Screen' => '24',
         'Light' => '26',
         'VCR' => '28',
-        'Other' => '30',
+        'Other' => '40',
     );
 
 

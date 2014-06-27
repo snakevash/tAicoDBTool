@@ -34,6 +34,7 @@ class ControllerDB {
      * @param $ControllerDevice
      * @param $ControllerImage
      * @param $HasNumberPad
+     * @param $SourceFrom
      * @return array
      */
     public function insert(
@@ -44,7 +45,9 @@ class ControllerDB {
         $ControllerBrand,
         $ControllerDevice,
         $ControllerImage,
-        $HasNumberPad){
+        $HasNumberPad,
+        $SourceFrom)
+    {
         $id = $this->db->insert('controller',array(
             'ControllerProtocol'=>$ControllerProtocol,
             'ControllerType'=>$ControllerType,
@@ -53,7 +56,8 @@ class ControllerDB {
             'ControllerBrand'=>$ControllerBrand,
             'ControllerDevice'=>$ControllerDevice,
             'ControllerImage'=>$ControllerImage,
-            'HasNumberPad'=>$HasNumberPad
+            'HasNumberPad' => $HasNumberPad,
+            'SourceFrom' => $SourceFrom
         ));
 
         return $id;

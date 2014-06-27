@@ -32,8 +32,8 @@ class BrandServices
             $tmp = array();
             for ($i = $v['startline']; $i < $v['endline']; $i++) {
                 $ttmp = array(
-                    'CN' => trim($sheetData[$i][\BrandConfig::$columns['CN']]),
-                    'EN' => trim($sheetData[$i][\BrandConfig::$columns['EN']])
+                    'CN' => trim(strtoupper($sheetData[$i][\BrandConfig::$columns['CN']])),
+                    'EN' => trim(strtoupper($sheetData[$i][\BrandConfig::$columns['EN']]))
                 );
                 array_push($tmp, $ttmp);
             }
