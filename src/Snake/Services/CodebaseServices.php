@@ -144,7 +144,7 @@ class CodebaseServices
 
         # 把遥控器信息插入到数据库
         $cdb = new ControllerDB($db);
-        $r = $cdb->isInserted($data['controllerData']['ControllerName']);
+        $r = $cdb->isInsertedByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'], $ControllerBrandID, $ControllerDeviceID);
         if (!$r) {
             # 注意 HasNumber的特殊处理
             $CodeController = $cdb->insert(
