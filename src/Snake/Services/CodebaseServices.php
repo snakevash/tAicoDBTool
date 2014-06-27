@@ -155,7 +155,9 @@ class CodebaseServices
                 trim($ControllerBrandID),
                 trim($ControllerDeviceID),
                 'defaultcontrollericon',
-                $data['controllerData']['HasNumber'] == '有' ? 1 : 0);
+                $data['controllerData']['HasNumber'] == '有' ? 1 : 0,
+                trim($data['controllerData']['SourceFrom'])
+            );
 
             $tcpdb = new TControllerProtocol($db);
             # 维护关系表
