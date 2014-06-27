@@ -82,6 +82,32 @@ class ControllerDB {
     }
 
     /**
+     * 是否已经插入过
+     * 强条件 遥控器品牌 遥控器设备
+     *
+     * @param $ControllerName
+     * @param $ControllerBrand
+     * @param $ControllerDevice
+     * @return bool
+     */
+    public function isInsertedByControllerBrandAndControllerDevice($ControllerName, $ControllerBrand, $ControllerDevice)
+    {
+        $r = $this->db->select('controller', '*', array(
+            'AND' => array(
+                'ControllerName' => $ControllerName,
+                'ControllerBrand' => $ControllerBrand,
+                'ControllerDevice' => $ControllerDevice
+            )
+        ));
+
+        if (count($r) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 获得遥控器ID
      *
      * @param $ControllerNameß
