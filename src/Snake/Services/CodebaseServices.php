@@ -140,7 +140,6 @@ class CodebaseServices
             }
         }
         # todo 清理数组中重复的数据
-        # todo 根据遥控器名称 品牌 设备 来判断
 
         # 把遥控器信息插入到数据库
         $cdb = new ControllerDB($db);
@@ -181,7 +180,7 @@ class CodebaseServices
 
         # 遥控器是否已经在数据
         # 不存在就直接insert
-        # 存在就更新所有的值
+        # 存在就更新值 包括新增、修改、删除
         if (!$insertedController) {
             # 不存在
             foreach ($data['codebasesData'] as $index => $unit) {
@@ -205,7 +204,13 @@ class CodebaseServices
         } else {
             # 存在
             $CodeController = $cdb->getControllerIDByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'], $ControllerBrandID, $ControllerDeviceID);
+            # 用于删除那些已经删除掉的代码
+            $codeIDs = array();
+
             foreach ($data['codebasesData'] as $index => $unit) {
+                # 查找codeid是否插入过
+
+
                 $resultUpdated = $cbdb->update(
                     trim($unit['CodeDisplayName']),
                     $CodeController,
@@ -219,6 +224,7 @@ class CodebaseServices
                     0
                 );
 
+                # 如果发生错误 报错
                 if ($resultUpdated < 0) {
                     return false;
                 }

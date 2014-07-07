@@ -27,5 +27,17 @@ class CodebaseDBTest extends PHPUnit_Framework_TestCase
 //            '00FF00FF',50,0,1,0);
 //        $this->assertTrue(!!$r,'测试更新代码库');
     }
+
+    /**
+     * @test
+     */
+    public function getCodeID()
+    {
+//        $model = new \Snake\CodebaseDB($this->db);
+//        $r = $model->getCodeID('电源','5');
+//        $this->assertTrue(!!$r,'测试更新代码库');
+    }
+
+
 }
  

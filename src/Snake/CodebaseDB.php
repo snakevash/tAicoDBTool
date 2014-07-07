@@ -112,4 +112,35 @@ class CodebaseDB
 
         return $affected;
     }
+
+    /**
+     * 获得代码ID
+     *
+     * @param $CodeDisplayName
+     * @param $CodeController
+     * @return bool
+     */
+    public function getCodeID($CodeDisplayName, $CodeController)
+    {
+        $recoder = $this->db->select('codebase', '*', array(
+            'AND' => array(
+                'CodeDisplayName' => $CodeDisplayName,
+                'CodeController' => $CodeController
+            )
+        ));
+
+        if ($recoder && count($recoder) == 1) {
+            return $recoder[0]['CodeID'];
+        } else {
+            return false;
+        }
+    }
+
+
+    public function deleteByCodeIDs(array $codeIDs)
+    {
+        foreach ($codeIDs as $codeid) {
+
+        }
+    }
 }
