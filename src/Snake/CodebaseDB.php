@@ -137,10 +137,22 @@ class CodebaseDB
     }
 
 
+    /**
+     * 批量删除id
+     *
+     * @param array $codeIDs
+     * @return bool
+     */
     public function deleteByCodeIDs(array $codeIDs)
     {
         foreach ($codeIDs as $codeid) {
-
+            $r = $this->db->delete('codebase', array(
+                'CodeID' => $codeid
+            ));
+            if ($r == 0) {
+                return false;
+            }
         }
+        return true;
     }
 }
