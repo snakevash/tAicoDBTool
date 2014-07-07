@@ -119,9 +119,9 @@ class CodebaseServices
                 continue;
             }
             # 是否存在该协议
-            $r = $cpdb->isInserted($unit['Protocol']);
+            $insertedProtocoled = $cpdb->isInserted($unit['Protocol']);
             # 不存在该协议就插入数据库
-            if (!$r) {
+            if (!$insertedProtocoled) {
                 $tid = $cpdb->insert(
                     trim($unit['Protocol']),
                     #$unit['UserCode'],
@@ -170,6 +170,7 @@ class CodebaseServices
             }
         } else {
             # 已经录入过了
+            # 更新原来的数据
             return false;
         }
 
