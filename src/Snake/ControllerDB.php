@@ -123,4 +123,29 @@ class ControllerDB {
             return false;
         }
     }
+
+    /**
+     * 获得遥控器的ID
+     *
+     * @param $ControllerName
+     * @param $ControllerBrand
+     * @param $ControllerDevice
+     * @return bool
+     */
+    public function getControllerIDByControllerBrandAndControllerDevice($ControllerName, $ControllerBrand, $ControllerDevice)
+    {
+        $r = $this->db->select('controller', '*', array(
+            'AND' => array(
+                'ControllerName' => $ControllerName,
+                'ControllerBrand' => $ControllerBrand,
+                'ControllerDevice' => $ControllerDevice
+            )
+        ));
+
+        if (count($r) > 0) {
+            return $r[0]['ControllerID'];
+        } else {
+            return false;
+        }
+    }
 } 

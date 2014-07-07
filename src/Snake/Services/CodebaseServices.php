@@ -144,8 +144,8 @@ class CodebaseServices
 
         # 把遥控器信息插入到数据库
         $cdb = new ControllerDB($db);
-        $r = $cdb->isInsertedByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'], $ControllerBrandID, $ControllerDeviceID);
-        if (!$r) {
+        $insertedController = $cdb->isInsertedByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'], $ControllerBrandID, $ControllerDeviceID);
+        if (!$insertedController) {
             # 注意 HasNumber的特殊处理
             $CodeController = $cdb->insert(
                 '', # 由于有关系表 这个值被留空
@@ -162,40 +162,70 @@ class CodebaseServices
             $tcpdb = new TControllerProtocol($db);
             # 维护关系表
             foreach ($hasProtocol as $index => $value) {
-                $r = $tcpdb->isInserted($CodeController, $value);
+                $insertedControllerProtocol = $tcpdb->isInserted($CodeController, $value);
                 # todo 维护遥控器-协议关系表日志
-                if (!$r) {
+                if (!$insertedControllerProtocol) {
                     $tcpdb->insert($CodeController, $value);
                 }
             }
         } else {
             # 已经录入过了
             # 更新原来的数据
-            return false;
+            # return false;
         }
 
 
         # 把红外代码数据插入到数据库
         # todo 增加出错处理
         $cbdb = new CodebaseDB($db);
-        foreach ($data['codebasesData'] as $index => $unit) {
-            $r = $cbdb->insert(
-                trim($unit['CodeDisplayName']),
-                $CodeController,
-                trim($unit['UserCode']),
-                trim($unit['CodeName']),
-                trim($unit['CodeKey']),
-                trim($unit['CodeKeyTrue']),
-                trim($unit['CodeOrder']),
-                trim($unit['CodeDefaultIcon']),
-                trim($unit['CodeGroup']),
-                0
-            );
-            if (!$r) {
-                # 插入出错
-                return false;
+
+        # 遥控器是否已经在数据
+        # 不存在就直接insert
+        # 存在就更新所有的值
+        if (!$insertedController) {
+            # 不存在
+            foreach ($data['codebasesData'] as $index => $unit) {
+                $resultInserted = $cbdb->insert(
+                    trim($unit['CodeDisplayName']),
+                    $CodeController,
+                    trim($unit['UserCode']),
+                    trim($unit['CodeName']),
+                    trim($unit['CodeKey']),
+                    trim($unit['CodeKeyTrue']),
+                    trim($unit['CodeOrder']),
+                    trim($unit['CodeDefaultIcon']),
+                    trim($unit['CodeGroup']),
+                    0
+                );
+                if (!$resultInserted) {
+                    # 插入出错
+                    return false;
+                }
+            }
+        } else {
+            # 存在
+            $CodeController = $cdb->getControllerIDByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'], $ControllerBrandID, $ControllerDeviceID);
+            foreach ($data['codebasesData'] as $index => $unit) {
+                $resultUpdated = $cbdb->update(
+                    trim($unit['CodeDisplayName']),
+                    $CodeController,
+                    trim($unit['UserCode']),
+                    trim($unit['CodeName']),
+                    trim($unit['CodeKey']),
+                    trim($unit['CodeKeyTrue']),
+                    trim($unit['CodeOrder']),
+                    trim($unit['CodeDefaultIcon']),
+                    trim($unit['CodeGroup']),
+                    0
+                );
+
+                if ($resultUpdated < 0) {
+                    return false;
+                }
             }
         }
+
+
         $r = FileInfo::rmCodeBaseFilePath($file);
         return $r;
     }

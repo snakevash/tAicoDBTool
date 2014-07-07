@@ -67,5 +67,49 @@ class CodebaseDB
         return $id;
     }
 
+    /**
+     * 更新相关代码
+     *
+     * @param $CodeDisplayName
+     * @param $CodeController
+     * @param $UserCode
+     * @param $CodeName
+     * @param $CodeKey
+     * @param $CodeKeyTrue
+     * @param $CodeOrder
+     * @param $CodeDefaultIcon
+     * @param $CodeGroup
+     * @param $CodeIsNeedIndex
+     * @return int
+     */
+    public function update(
+        $CodeDisplayName,
+        $CodeController,
+        $UserCode,
+        $CodeName,
+        $CodeKey,
+        $CodeKeyTrue,
+        $CodeOrder,
+        $CodeDefaultIcon,
+        $CodeGroup,
+        $CodeIsNeedIndex)
+    {
+        $affected = $this->db->update('codebase', array(
+            'UserCode' => $UserCode,
+            'CodeName' => $CodeName,
+            'CodeKey' => $CodeKey,
+            'CodeKeyTrue' => $CodeKeyTrue,
+            'CodeOrder' => $CodeOrder,
+            'CodeDefaultIcon' => $CodeDefaultIcon,
+            'CodeGroup' => $CodeGroup,
+            'CodeIsNeedIndex' => $CodeIsNeedIndex
+        ), array(
+            'AND' => array(
+                'CodeDisplayName' => $CodeDisplayName,
+                'CodeController' => $CodeController
+            )
+        ));
 
+        return $affected;
+    }
 }
