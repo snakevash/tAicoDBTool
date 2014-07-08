@@ -155,4 +155,47 @@ class CodebaseDB
         }
         return true;
     }
+
+    /**
+     * 通过中文按键名字和遥控器id
+     * 判断按键是否插入过
+     *
+     * @param $CodeDisplayName
+     * @param $CodeController
+     * @return bool
+     */
+    public function isInsertedByCodeDisplayNameAndCodeController($CodeDisplayName, $CodeController)
+    {
+        $r = $this->db->select('codebase', '*', array(
+            'AND' => array(
+                'CodeDisplayName' => $CodeDisplayName,
+                'CodeController' => $CodeController
+            )
+        ));
+
+        if ($r && count($r) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 获得相关遥控器的所有按键列表
+     *
+     * @param $CodeController
+     * @return array|bool
+     */
+    public function getOneControllerAllCodeids($CodeController)
+    {
+        $r = $this->db->select('codebase', 'CodeID', array(
+            'CodeController' => $CodeController
+        ));
+
+        if ($r && count($r) > 0) {
+            return $r;
+        } else {
+            return false;
+        }
+    }
 }

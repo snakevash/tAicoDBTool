@@ -38,6 +38,46 @@ class CodebaseDBTest extends PHPUnit_Framework_TestCase
 //        $this->assertTrue(!!$r,'测试更新代码库');
     }
 
+    /**
+     * @test
+     */
+    public function deleteByCodeIDs()
+    {
+//        $codeids = array(1,2,3);
+//        $model = new \Snake\CodebaseDB($this->db);
+//        $r = $model->deleteByCodeIDs($codeids);
+//        $this->assertTrue($r,'测试删除多个codeids');
+    }
 
+    /**
+     * @test
+     */
+    public function isInsertedByCodeDisplayNameAndCodeController()
+    {
+//        $params = array('C-20-A','1');
+//        $model = new \Snake\CodebaseDB($this->db);
+//        $r = $model->isInsertedByCodeDisplayNameAndCodeController($params[0],$params[1]);
+//        $this->assertTrue($r,'测试查找按键是否插入过');
+    }
+
+    /**
+     * @test
+     */
+    public function arrayDiff()
+    {
+//        $a1 = array(1,2,3,4,5,6,7,8);
+//        $a2 = array(4,5,6,7,8,9,10,12);
+//        $r = array_diff($a1,$a2);
+    }
+
+    /**
+     * @test
+     */
+    public function getOneControllerAllCodeids()
+    {
+//        $model = new \Snake\CodebaseDB($this->db);
+//        $r = $model->getOneControllerAllCodeids('1');
+//        $this->assertTrue(is_array($r),'测试获得某个遥控器所有建制');
+    }
 }
  

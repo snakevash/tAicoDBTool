@@ -209,25 +209,62 @@ class CodebaseServices
 
             foreach ($data['codebasesData'] as $index => $unit) {
                 # 查找codeid是否插入过
+                $codeInserted = $cbdb->isInsertedByCodeDisplayNameAndCodeController($unit['CodeDisplayName'], $CodeController);
 
+                if ($codeInserted) {
+                    # 更新键值
+                    $resultUpdated = $cbdb->update(
+                        trim($unit['CodeDisplayName']),
+                        $CodeController,
+                        trim($unit['UserCode']),
+                        trim($unit['CodeName']),
+                        trim($unit['CodeKey']),
+                        trim($unit['CodeKeyTrue']),
+                        trim($unit['CodeOrder']),
+                        trim($unit['CodeDefaultIcon']),
+                        trim($unit['CodeGroup']),
+                        0
+                    );
 
-                $resultUpdated = $cbdb->update(
-                    trim($unit['CodeDisplayName']),
-                    $CodeController,
-                    trim($unit['UserCode']),
-                    trim($unit['CodeName']),
-                    trim($unit['CodeKey']),
-                    trim($unit['CodeKeyTrue']),
-                    trim($unit['CodeOrder']),
-                    trim($unit['CodeDefaultIcon']),
-                    trim($unit['CodeGroup']),
-                    0
-                );
+                    # 如果发生错误 报错
+                    # < 0 是因为 可能这个按键什么都没有更新
+                    # 反正直接重新更新 优化速度
+                    if ($resultUpdated < 0) {
+                        return false; # todo 如果出错 那么怎么撤销之前的插入
+                    }
 
-                # 如果发生错误 报错
-                if ($resultUpdated < 0) {
-                    return false;
+                    # 增加相关codeid
+                    $insertedCodeID = $cbdb->getCodeID(trim($unit['CodeDisplayName']), trim($CodeController));
+                    array_push($codeIDs, $insertedCodeID);
+                } else {
+                    # 插入新的按键
+                    $resultInserted = $cbdb->insert(
+                        trim($unit['CodeDisplayName']),
+                        $CodeController,
+                        trim($unit['UserCode']),
+                        trim($unit['CodeName']),
+                        trim($unit['CodeKey']),
+                        trim($unit['CodeKeyTrue']),
+                        trim($unit['CodeOrder']),
+                        trim($unit['CodeDefaultIcon']),
+                        trim($unit['CodeGroup']),
+                        0
+                    );
+
+                    # 把相关的代码id增加到对比数组中
+                    array_push($codeIDs, $resultInserted);
+
+                    if (!$resultInserted) {
+                        # 插入出错
+                        return false;
+                    }
                 }
+            }
+            # 删除数据库中多余的数据记录
+            $databaseCodeIDs = $cbdb->getOneControllerAllCodeids($CodeController);
+            $diffArray = array_diff($databaseCodeIDs, $codeIDs);
+            if (count($diffArray) > 0) {
+                $deleteResult = $cbdb->deleteByCodeIDs($diffArray);
             }
         }
 
