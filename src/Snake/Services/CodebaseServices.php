@@ -83,6 +83,7 @@ class CodebaseServices
         $tmp .= empty($unit['CarrierCycle']) ? '' : $unit['CarrierCycle'];
         $tmp .= empty($unit['DataCycle']) ? '' : $unit['DataCycle'];
         $tmp .= empty($unit['CodeKeyTrue']) ? '' : $unit['CodeKeyTrue'];
+        $tmp .= empty($unit['DataBits']) ? '' : $unit['DataBits'];
 
         return $tmp;
     }
