@@ -10,7 +10,8 @@
 namespace Snake;
 
 
-class ControllerDB {
+class ControllerDB
+{
     private $db;
 
     /**
@@ -48,14 +49,14 @@ class ControllerDB {
         $HasNumberPad,
         $SourceFrom)
     {
-        $id = $this->db->insert('controller',array(
-            'ControllerProtocol'=>$ControllerProtocol,
-            'ControllerType'=>$ControllerType,
-            'ControllerName'=>$ControllerName,
-            'ControllerSeries'=>$ControllerSeries,
-            'ControllerBrand'=>$ControllerBrand,
-            'ControllerDevice'=>$ControllerDevice,
-            'ControllerImage'=>$ControllerImage,
+        $id = $this->db->insert('controller', array(
+            'ControllerProtocol' => $ControllerProtocol,
+            'ControllerType' => $ControllerType,
+            'ControllerName' => $ControllerName,
+            'ControllerSeries' => $ControllerSeries,
+            'ControllerBrand' => $ControllerBrand,
+            'ControllerDevice' => $ControllerDevice,
+            'ControllerImage' => $ControllerImage,
             'HasNumberPad' => $HasNumberPad,
             'SourceFrom' => $SourceFrom
         ));
@@ -64,17 +65,62 @@ class ControllerDB {
     }
 
     /**
+     * 更新遥控器
+     *
+     * @param $ControllerID
+     * @param $ControllerProtocol
+     * @param $ControllerType
+     * @param $ControllerName
+     * @param $ControllerSeries
+     * @param $ControllerBrand
+     * @param $ControllerDevice
+     * @param $ControllerImage
+     * @param $HasNumberPad
+     * @param $SourceFrom
+     * @return bool
+     */
+    public function update(
+        $ControllerID,
+        $ControllerProtocol,
+        $ControllerType,
+        $ControllerName,
+        $ControllerSeries,
+        $ControllerBrand,
+        $ControllerDevice,
+        $ControllerImage,
+        $HasNumberPad,
+        $SourceFrom)
+    {
+        $r = $this->db->update('controller', array(
+            'ControllerProtocol' => $ControllerProtocol,
+            'ControllerType' => $ControllerType,
+            'ControllerName' => $ControllerName,
+            'ControllerSeries' => $ControllerSeries,
+            'ControllerBrand' => $ControllerBrand,
+            'ControllerDevice' => $ControllerDevice,
+            'ControllerImage' => $ControllerImage,
+            'HasNumberPad' => $HasNumberPad,
+            'SourceFrom' => $SourceFrom
+        ), array(
+            'ControllerID' => $ControllerID
+        ));
+
+        return !!$r;
+    }
+
+    /**
      * 是否已经插入过
      *
      * @param $ControllerName
      * @return bool
      */
-    public function isInserted($ControllerName){
-        $r = $this->db->select('controller','*',array(
-            'ControllerName'=>$ControllerName
+    public function isInserted($ControllerName)
+    {
+        $r = $this->db->select('controller', '*', array(
+            'ControllerName' => $ControllerName
         ));
 
-        if(count($r) > 0){
+        if (count($r) > 0) {
             return true;
         } else {
             return false;
@@ -113,7 +159,8 @@ class ControllerDB {
      * @param $ControllerNameß
      * @return bool
      */
-    public function getControllerID($ControllerNameß){
+    public function getControllerID($ControllerNameß)
+    {
         $r = $this->db->select('controller', '*', array(
             'ControllerName' => $ControllerNameß
         ));

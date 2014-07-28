@@ -30,6 +30,7 @@ class CodebaseDB
      * @param $CodeDisplayName
      * @param $CodeController
      * @param $UserCode
+     * @param $KeyCode
      * @param $CodeName
      * @param $CodeKey
      * @param $CodeKeyTrue
@@ -43,6 +44,7 @@ class CodebaseDB
         $CodeDisplayName,
         $CodeController,
         $UserCode,
+        $KeyCode,
         $CodeName,
         $CodeKey,
         $CodeKeyTrue,
@@ -55,6 +57,7 @@ class CodebaseDB
             'CodeDisplayName' => $CodeDisplayName,
             'CodeController' => $CodeController,
             'UserCode' => $UserCode,
+            'KeyCode' => $KeyCode,
             'CodeName' => $CodeName,
             'CodeKey' => $CodeKey,
             'CodeKeyTrue' => $CodeKeyTrue,
@@ -73,6 +76,7 @@ class CodebaseDB
      * @param $CodeDisplayName
      * @param $CodeController
      * @param $UserCode
+     * @param $KeyCode
      * @param $CodeName
      * @param $CodeKey
      * @param $CodeKeyTrue
@@ -86,6 +90,7 @@ class CodebaseDB
         $CodeDisplayName,
         $CodeController,
         $UserCode,
+        $KeyCode,
         $CodeName,
         $CodeKey,
         $CodeKeyTrue,
@@ -96,6 +101,7 @@ class CodebaseDB
     {
         $affected = $this->db->update('codebase', array(
             'UserCode' => $UserCode,
+            'KeyCode' => $KeyCode,
             'CodeName' => $CodeName,
             'CodeKey' => $CodeKey,
             'CodeKeyTrue' => $CodeKeyTrue,

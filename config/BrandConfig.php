@@ -23,45 +23,55 @@ class BrandConfig
             'endline' => 86,
             'DeviceID' => 4
         ),
-        'STB' => array(
+        'NetSTB' => array(
             'startline' => 92,
-            'endline' => 331,
+            'endline' => 319,
+            'DeviceID' => 5
+        ),
+        'STB' => array(
+            'startline' => 332,
+            'endline' => 334,
             'DeviceID' => 6
         ),
         'DVD' => array(
-            'startline' => 359,
-            'endline' => 385,
+            'startline' => 346,
+            'endline' => 372,
             'DeviceID' => 10
         ),
         'Amp' => array(
-            'startline' => 389,
-            'endline' => 422,
+            'startline' => 376,
+            'endline' => 409,
             'DeviceID' => 8
         ),
         'Projector' => array(
-            'startline' => 426,
-            'endline' => 482,
+            'startline' => 413,
+            'endline' => 469,
             'DeviceID' => 12
         ),
         'Screeen' => array(
-            'startline' => 484,
-            'endline' => 496,
+            'startline' => 471,
+            'endline' => 483,
             'DeviceID' => 24
         ),
         'Hifi' => array(
-            'startline' => 499,
-            'endline' => 574,
+            'startline' => 486,
+            'endline' => 557,
             'DeviceID' => 20
         ),
         'Camera' => array(
-            'startline' => 579,
-            'endline' => 581,
+            'startline' => 563,
+            'endline' => 565,
             'DeviceID' => 22
         ),
         'Fan' => array(
-            'startline' => 588,
-            'endline' => 625,
+            'startline' => 572,
+            'endline' => 609,
             'DeviceID' => 16
+        ),
+        'Other' => array(
+            'startline' => 611,
+            'endline' => 618,
+            'DeviceID' => 40
         )
     );
 
@@ -71,6 +81,6 @@ class BrandConfig
     public static $columns = array(
         'CN' => 'B', # 品牌中文列表
         'EN' => 'C', # 品牌英文列表
-        'Stop' => 'D', # 停产品牌
+        'Stop' => 'F', # 停产品牌
     );
 } 

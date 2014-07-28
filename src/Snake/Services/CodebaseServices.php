@@ -82,8 +82,8 @@ class CodebaseServices
         $tmp .= empty($unit['TVFormat']) ? '' : $unit['TVFormat'];
         $tmp .= empty($unit['CarrierCycle']) ? '' : $unit['CarrierCycle'];
         $tmp .= empty($unit['DataCycle']) ? '' : $unit['DataCycle'];
-        $tmp .= empty($unit['CodeKeyTrue']) ? '' : $unit['CodeKeyTrue'];
         $tmp .= empty($unit['DataBits']) ? '' : $unit['DataBits'];
+        $tmp .= empty($unit['CodeKeyTrue']) ? '' : $unit['CodeKeyTrue'];
 
         return $tmp;
     }
@@ -171,6 +171,22 @@ class CodebaseServices
         } else {
             # 已经录入过了
             # 更新原来的数据
+            # 现在只提供修补遥控器品牌的功能
+
+            $CodeController = $cdb->getControllerIDByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'], 0, $ControllerDeviceID);
+            $CodeController = $cdb->update(
+                $CodeController,
+                '', # 由于有关系表 这个值被留空
+                trim($data['controllerData']['ControllerType']),
+                trim($data['controllerData']['ControllerName']),
+                trim($data['controllerData']['ControllerSeries']),
+                trim($ControllerBrandID),
+                trim($ControllerDeviceID),
+                'defaultcontrollericon',
+                $data['controllerData']['HasNumber'] == '有' ? 1 : 0,
+                trim($data['controllerData']['SourceFrom'])
+            );
+
             # return false;
         }
 
@@ -189,6 +205,7 @@ class CodebaseServices
                     trim($unit['CodeDisplayName']),
                     $CodeController,
                     trim($unit['UserCode']),
+                    trim($unit['KeyCode']),
                     trim($unit['CodeName']),
                     trim($unit['CodeKey']),
                     trim($unit['CodeKeyTrue']),
@@ -218,6 +235,7 @@ class CodebaseServices
                         trim($unit['CodeDisplayName']),
                         $CodeController,
                         trim($unit['UserCode']),
+                        trim($unit['KeyCode']),
                         trim($unit['CodeName']),
                         trim($unit['CodeKey']),
                         trim($unit['CodeKeyTrue']),
@@ -243,6 +261,7 @@ class CodebaseServices
                         trim($unit['CodeDisplayName']),
                         $CodeController,
                         trim($unit['UserCode']),
+                        trim($unit['KeyCode']),
                         trim($unit['CodeName']),
                         trim($unit['CodeKey']),
                         trim($unit['CodeKeyTrue']),

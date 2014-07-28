@@ -54,18 +54,19 @@ class CodeBaseConfig
         'CodeDisplayName' => '1',
         'Protocol' => '2',
         'UserCode' => '3',
-        'CodeKeyTrue' => '4',
-        'Cycle' => '5',
-        'ControllerProtocolFlag' => '6',
-        'RetransFrame' => '7',
-        'TVFormat' => '8',
-        'CarrierCycle' => '9',
-        'DataCycle' => '10',
-        'CodeName' => '11',
-        'CodeOrder' => '12',
-        'CodeGroup' => '13',
-        'CodeDefaultIcon' => '19',
-        'DataBits' => '15'
+        'KeyCode' => '4',
+        'CodeKeyTrue' => '5',
+        'Cycle' => '6',
+        'ControllerProtocolFlag' => '7',
+        'RetransFrame' => '8',
+        'TVFormat' => '9',
+        'CarrierCycle' => '10',
+        'DataCycle' => '11',
+        'CodeName' => '12',
+        'CodeOrder' => '13',
+        'CodeGroup' => '14',
+        'CodeDefaultIcon' => '20',
+        'DataBits' => '21'
     );
 
     /**
