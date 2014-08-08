@@ -194,6 +194,10 @@ class CodebaseServices
         # 把红外代码数据插入到数据库
         # todo 增加出错处理
         $cbdb = new CodebaseDB($db);
+        $CodeGroup3Index = range(100, 149, 1);
+        $CodeGroup4Index = range(150, 255, 1);
+        # 可能会分配完，但是至今没有碰见过
+
 
         # 遥控器是否已经在数据
         # 不存在就直接insert
@@ -201,6 +205,20 @@ class CodebaseServices
         if (!$insertedController) {
             # 不存在
             foreach ($data['codebasesData'] as $index => $unit) {
+                # $codeOrder 产生codeOrder
+                if (empty($unit['CodeOrder'])) {
+                    switch ($unit['CodeGroup']) {
+                        case '3':
+                            $unit['CodeOrder'] = array_shift($CodeGroup3Index);
+                            break;
+                        case '4':
+                            $unit['CodeOrder'] = array_shift($CodeGroup4Index);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 $resultInserted = $cbdb->insert(
                     trim($unit['CodeDisplayName']),
                     $CodeController,
@@ -230,6 +248,19 @@ class CodebaseServices
                 $codeInserted = $cbdb->isInsertedByCodeDisplayNameAndCodeController($unit['CodeDisplayName'], $CodeController);
 
                 if ($codeInserted) {
+                    if (empty($unit['CodeOrder'])) {
+                        switch ($unit['CodeGroup']) {
+                            case '3':
+                                $unit['CodeOrder'] = array_shift($CodeGroup3Index);
+                                break;
+                            case '4':
+                                $unit['CodeOrder'] = array_shift($CodeGroup4Index);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
                     # 更新键值
                     $resultUpdated = $cbdb->update(
                         trim($unit['CodeDisplayName']),
@@ -256,6 +287,26 @@ class CodebaseServices
                     $insertedCodeID = $cbdb->getCodeID(trim($unit['CodeDisplayName']), trim($CodeController));
                     array_push($codeIDs, $insertedCodeID);
                 } else {
+
+                    # 插入之前 根据CodeGroup来判断 应该给它随机产生什么值？
+                    # 有一个问题在于 每次更新的时候，CodeOrder可能会改变
+                    # codeGroup = 3、4的CodeOrder前台是不需要的
+                    # 所以 codeGroup = 3、4的CodeOrder不能在前端使用
+
+                    # 2014-08-08 代码插入数据库随机产生CodeOrder，CodeGroup为3，4
+                    if (empty($unit['CodeOrder'])) {
+                        switch ($unit['CodeGroup']) {
+                            case '3':
+                                $unit['CodeOrder'] = array_shift($CodeGroup3Index);
+                                break;
+                            case '4':
+                                $unit['CodeOrder'] = array_shift($CodeGroup4Index);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
                     # 插入新的按键
                     $resultInserted = $cbdb->insert(
                         trim($unit['CodeDisplayName']),

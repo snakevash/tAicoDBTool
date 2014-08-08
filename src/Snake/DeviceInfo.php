@@ -21,6 +21,7 @@ class DeviceInfo
     public static $NameMap = array(
         'TV' => '2',
         'Aircon' => '4',
+        'CableTV' => '5',
         'STB' => '6',
         'Amp' => '8',
         'DVD' => '10',

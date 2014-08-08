@@ -73,6 +73,29 @@ class BrandDB
     }
 
     /**
+     * 品牌是否已经存在数据库 中文品牌和英文品牌
+     *
+     * @param $DisplayNameCN
+     * @param $BrandName
+     * @return bool
+     */
+    public function isInsertedCNAndEn($DisplayNameCN, $BrandName)
+    {
+        $r = $this->db->select('brand', '*', array(
+            "AND" => array(
+                'DisplayNameCN' => $DisplayNameCN,
+                'BrandName' => $BrandName
+            )
+        ));
+
+        if (count($r) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 品牌是否已经存在数据库
      *
      * @param string $BrandName 英文版本

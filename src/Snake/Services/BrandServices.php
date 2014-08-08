@@ -65,14 +65,13 @@ class BrandServices
 //                    ' CN=' . $vv['CN'] .
 //                    ' EN=' . (is_null($vv['EN']) ? 'null' : $vv['EN']) .
 //                    ' DeviceID=' . $v['DeviceID'] . PHP_EOL;
-                # todo 只做了品牌的英文名称和中文名称
                 $DeviceID = $v['DeviceID'];
                 $BrandName = (is_null($vv['EN']) ? '' : $vv['EN']);
                 $DisplayNameCN = $vv['CN'];
 
                 # 首先插入Brand信息
                 # 判断品牌是否已经插入过
-                if ($dbmodel->isInserted($DisplayNameCN)) {
+                if ($dbmodel->isInsertedCNAndEn($DisplayNameCN, $BrandName)) {
                     # 获得BrandID
                     $BrandID = $dbmodel->getBrandID($DisplayNameCN);
                     # 查看BrandID和DeviceID是否已经插入
