@@ -36,11 +36,11 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
 
 # 处理的路由
 $app->get('/', function () use ($app) {
-    $app->render('../index.html');
+    $app->render('index.php');
 });
 
 $app->get('/user/login', function () use ($app) {
-    $app->render('../login.html');
+    $app->render('login.php');
 });
 
 $app->get('/hello/:name', function ($name) use ($app) {
