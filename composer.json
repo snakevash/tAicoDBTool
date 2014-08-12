@@ -10,16 +10,17 @@
     "minimum-stability": "dev",
     "require": {
         "phpoffice/phpexcel": "1.8.0",
-        "catfan/medoo":"v0.9.6",
-        "keboola/csv":"1.1.3",
-        "monolog/monolog":"1.10.0"
+        "catfan/medoo": "v0.9.6",
+        "keboola/csv": "1.1.3",
+        "monolog/monolog": "1.10.0",
+        "slim/slim": "2.4.3"
     },
-    "autoload":{
-        "psr-0":{
-            "Snake\\":"src/",
-            "Test\\":"src/"
+    "autoload": {
+        "psr-0": {
+            "Snake\\": "src/",
+            "Test\\": "src/"
         },
-        "files":[
+        "files": [
             "config/DBFileConfig.php",
             "config/OtherConfig.php",
             "config/BrandConfig.php",

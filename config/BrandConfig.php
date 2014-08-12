@@ -18,72 +18,72 @@ class BrandConfig
     public static $brands = array(
         'TV' => array(
             'startline' => 2,
-            'endline' => 65,
+            'endline' => 67,
             'DeviceID' => 2
         ),
         'Aircon' => array(
             'startline' => 71,
-            'endline' => 116,
+            'endline' => 119,
             'DeviceID' => 4
         ),
         'STB' => array(
-            'startline' => 120,
-            'endline' => 319,
+            'startline' => 125,
+            'endline' => 324,
             'DeviceID' => 6
         ),
         'CableTV' => array(
-            'startline' => 326,
-            'endline' => 333,
+            'startline' => 331,
+            'endline' => 338,
             'DeviceID' => 5
         ),
         'DVD' => array(
-            'startline' => 338,
-            'endline' => 366,
+            'startline' => 343,
+            'endline' => 371,
             'DeviceID' => 10
         ),
         'Amp' => array(
-            'startline' => 372,
-            'endline' => 406,
+            'startline' => 377,
+            'endline' => 411,
             'DeviceID' => 8
         ),
         'Projector' => array(
-            'startline' => 409,
-            'endline' => 468,
+            'startline' => 414,
+            'endline' => 473,
             'DeviceID' => 12
         ),
         'Screeen' => array(
-            'startline' => 474,
-            'endline' => 487,
+            'startline' => 479,
+            'endline' => 492,
             'DeviceID' => 24
         ),
         'Hifi' => array(
-            'startline' => 489,
-            'endline' => 560,
+            'startline' => 494,
+            'endline' => 565,
             'DeviceID' => 20
         ),
         'Camera' => array(
-            'startline' => 565,
-            'endline' => 568,
+            'startline' => 570,
+            'endline' => 573,
             'DeviceID' => 22
         ),
         'Fan' => array(
-            'startline' => 574,
-            'endline' => 606,
+            'startline' => 579,
+            'endline' => 611,
             'DeviceID' => 16
         ),
         'Other' => array(
-            'startline' => 607,
-            'endline' => 624,
+            'startline' => 612,
+            'endline' => 629,
             'DeviceID' => 40
         ),
         'Heater' => array(
-            'startline' => 638,
-            'endline' => 639,
+            'startline' => 643,
+            'endline' => 644,
             'DeviceID' => 14
         ),
         'VCR' => array(
-            'startline' => 648,
-            'endline' => 649,
+            'startline' => 653,
+            'endline' => 654,
             'DeviceID' => 28
         )
     );
