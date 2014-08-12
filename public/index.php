@@ -39,6 +39,10 @@ $app->get('/', function () use ($app) {
     $app->render('../index.html');
 });
 
+$app->get('/user/login', function () use ($app) {
+    $app->render('../login.html');
+});
+
 $app->get('/hello/:name', function ($name) use ($app) {
     $app->render('hello.php', array('name' => $name));
 });
