@@ -17,6 +17,8 @@ $app = new \Slim\Slim(array(
     'log.enabled' => true,
     'log.level' => \Slim\Log::DEBUG,
     'log.writer' => new \Slim\LogWriter(fopen("../logs/testlog.txt", "rw")),
+    'view' => '\Slim\LayoutView',
+    'layout' => 'layouts/main.php' # 默认布局
 ));
 
 $app->setName('tAicoDBTool');
@@ -34,15 +36,63 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
     'cipher_mode' => MCRYPT_MODE_CBC
 )));
 
-# 处理的路由
-$app->get('/', function () use ($app) {
-    $app->render('index.php');
+# 全局配置
+$mainPhp = array(
+    'leftSubMenu' => true,
+    'isBrand' => false,
+    'isController' => false,
+    'isSerie' => false,
+    'pageName' => '主页面',
+    'navName' => '主页面',
+);
+
+# 主页
+$app->get('/', function () use ($app,$mainPhp) {
+    $mainPhp['leftSubMenu'] = false;
+    $app->render('index.php', array(
+        'mainPhp' => $mainPhp
+    ));
 });
 
+# 用户登录
 $app->get('/user/login', function () use ($app) {
-    $app->render('login.php');
+    $app->render('login.php',array('layout'=>false));
 });
 
+# 品牌上传
+$app->get('/brand/index', function () use ($app,$mainPhp) {
+    $mainPhp['pageName'] = '品牌';
+    $mainPhp['navName'] = '品牌';
+    $mainPhp['isBrand'] = true;
+
+    $app->render('brand/index.php', array(
+        'mainPhp' => $mainPhp
+    ));
+});
+
+# 遥控器上传
+$app->get('/controller/index', function () use ($app,$mainPhp) {
+    $mainPhp['pageName'] = '遥控器';
+    $mainPhp['navName'] = '遥控器';
+    $mainPhp['isController'] = true;
+
+    $app->render('controller/index.php', array(
+        'mainPhp' => $mainPhp
+    ));
+});
+
+# 系列上传
+$app->get('/serie/index', function () use ($app,$mainPhp) {
+    $mainPhp['pageName'] = '系列';
+    $mainPhp['navName'] = '系列';
+    $mainPhp['isSerie'] = true;
+
+    $app->render('serie/index.php', array(
+        'mainPhp' => $mainPhp
+    ));
+});
+
+# 测试路由
 $app->get('/hello/:name', function ($name) use ($app) {
     $app->render('hello.php', array('name' => $name));
 });
