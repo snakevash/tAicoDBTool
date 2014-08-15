@@ -117,6 +117,8 @@ class BrandServices
                 }
             }
         }
+
+        return true;
     }
 
     /**

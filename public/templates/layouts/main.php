@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/css/select2.css"/>
     <link rel="stylesheet" href="/css/unicorn.grey.css" class="skin-color"/>
 
+    <script src="/js/jquery.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
@@ -164,8 +165,6 @@
     </div>
 </div>
 
-
-<script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.ui.custom.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/jquery.peity.min.js"></script>

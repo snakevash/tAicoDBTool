@@ -7,7 +7,55 @@
  * Time: 下午4:03
  */
 
+define('UPLOADPATHBRANDS', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'brands');
+define('UPLOADPATHCODEBASEBEFORE', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'codebasebefore');
+define('UPLOADPATHCODEBASEAFTER', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'codebaseafter');
+
+
 require_once '../vendor/autoload.php';
+
+# 全局函数
+/**
+ * 处理单个上传文件
+ *
+ * @param string $fileTarget
+ * @param string $filePath
+ * @param string $fileName
+ * @return bool
+ */
+function handlerUploadFile($fileTarget = 'fileupload', $filePath = '', $fileName = '')
+{
+    if (isset($_FILES[$fileTarget])) {
+        # 是否指定名称
+        if (empty($fileName)) {
+            $fullFilePath = $filePath . DIRECTORY_SEPARATOR . $_FILES['fileupload']['name'];
+        } else {
+            $fullFilePath = $filePath . DIRECTORY_SEPARATOR . $fileName;
+        }
+        move_uploaded_file($_FILES[$fileTarget]['tmp_name'], $fullFilePath);
+        return chmod($fullFilePath, 0777);
+    }
+    return false;
+}
+
+/**
+ * 处理批量文件上传
+ *
+ * @param string $fileTarget
+ * @param string $filePath
+ * @return bool
+ */
+function handlerUploadFiles($fileTarget = 'fileuploads', $filePath = '')
+{
+    if (isset($_FILES[$fileTarget])) {
+        for ($i = 0; $i < count($_FILES[$fileTarget]['name']); $i++) {
+            $fullFilePath = $filePath . DIRECTORY_SEPARATOR . $_FILES['fileupload']['name'][$i];
+            move_uploaded_file($_FILES[$fileTarget]['tmp_name'][$i], $fullFilePath);
+            return chmod($fullFilePath, 0777);
+        }
+    }
+    return false;
+}
 
 # 配置应用
 $app = new \Slim\Slim(array(
@@ -47,7 +95,7 @@ $mainPhp = array(
 );
 
 # 主页
-$app->get('/', function () use ($app,$mainPhp) {
+$app->get('/', function () use ($app, $mainPhp) {
     $mainPhp['leftSubMenu'] = false;
     $app->render('index.php', array(
         'mainPhp' => $mainPhp
@@ -56,11 +104,11 @@ $app->get('/', function () use ($app,$mainPhp) {
 
 # 用户登录
 $app->get('/user/login', function () use ($app) {
-    $app->render('login.php',array('layout'=>false));
+    $app->render('login.php', array('layout' => false));
 });
 
 # 品牌上传
-$app->get('/brand/index', function () use ($app,$mainPhp) {
+$app->get('/brand/index', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '品牌';
     $mainPhp['navName'] = '品牌';
     $mainPhp['isBrand'] = true;
@@ -71,7 +119,7 @@ $app->get('/brand/index', function () use ($app,$mainPhp) {
 });
 
 # 遥控器上传
-$app->get('/controller/index', function () use ($app,$mainPhp) {
+$app->get('/controller/index', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '遥控器';
     $mainPhp['navName'] = '遥控器';
     $mainPhp['isController'] = true;
@@ -81,8 +129,23 @@ $app->get('/controller/index', function () use ($app,$mainPhp) {
     ));
 });
 
+# 遥控器上传文件处理
+$app->post('/controller/deal', function () use ($app) {
+    $r = handlerUploadFile('fileupload',UPLOADPATHBRANDS,'brands.xls');
+
+    if ($r) {
+        var_dump(scandir(UPLOADPATHBRANDS));
+//        $sBrand = new \Snake\Services\BrandServices();
+//        $sfiles = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDS);
+//        $tempr = $sBrand->runInsertBrandMain($sfiles[0]);
+//        if ($tempr) {
+//            echo '更新品牌成功';
+//        }
+    }
+});
+
 # 系列上传
-$app->get('/serie/index', function () use ($app,$mainPhp) {
+$app->get('/serie/index', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '系列';
     $mainPhp['navName'] = '系列';
     $mainPhp['isSerie'] = true;
