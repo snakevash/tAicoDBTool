@@ -51,20 +51,18 @@ class BrandServices
      * 插入品牌数据表
      *
      * @param $file
+     * @return bool
      */
     public function runInsertBrandMain($file)
     {
         # 遍历数据结构
         $data = $this->getFileContent($file);
 
+        $results = array();
         $db = new \medoo(\DBFileConfig::$dbinfo);
         $dbmodel = new BrandDB($db);
         foreach ($data as $t => $v) {
             foreach ($v['Data'] as $index => $vv) {
-//                echo '插入的数据是: 序号=' . $index .
-//                    ' CN=' . $vv['CN'] .
-//                    ' EN=' . (is_null($vv['EN']) ? 'null' : $vv['EN']) .
-//                    ' DeviceID=' . $v['DeviceID'] . PHP_EOL;
                 $DeviceID = $v['DeviceID'];
                 $BrandName = (is_null($vv['EN']) ? '' : $vv['EN']);
                 $DisplayNameCN = $vv['CN'];
@@ -83,9 +81,11 @@ class BrandServices
 
                         # debug信息
                         if ($r) {
-                            $this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
+                            #$this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
+                            $results[] = $this->logConsoleWeb($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
                         } else {
-                            $this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
+                            #$this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
+                            $results[] = $this->logConsoleWeb($DisplayNameCN, $BrandName, $BrandID, $DeviceID,false);
                         }
                     }
 
@@ -102,23 +102,26 @@ class BrandServices
 
                     # 查看BrandID和DeviceID是否已经插入
                     if ($dbmodel->isInsertedTDeviceBrand($BrandID, $DeviceID)) {
-                        # 如果插入了就什么就不用管了
+                        # 如果插入了 就记录一下日志
+                        $results[] = $this->logConsoleWeb($DisplayNameCN,$BrandName,$BrandID,$DeviceID);
                     } else {
                         # 如果没有插入，那么，就先插入那么就ok了
                         $r = $dbmodel->insertTDeviceBrand($BrandID, $DeviceID);
 
                         # debug信息
                         if ($r) {
-                            $this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
+                            #$this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
+                            $results[] = $this->logConsoleWeb($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
                         } else {
-                            $this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
+                            #$this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
+                            $results[] = $this->logConsoleWeb($DisplayNameCN, $BrandName, $BrandID, $DeviceID,false);
                         }
                     }
                 }
             }
         }
 
-        return true;
+        return $results;
     }
 
     /**
@@ -144,5 +147,33 @@ class BrandServices
         echo '设备ID=' . $DeviceID . ' ';
         echo $success ? '执行成功' : '执行失败';
         echo PHP_EOL;
+    }
+
+    /**
+     * web端控制台输出
+     *
+     * @param $DisplayNameCN
+     * @param $BrandName
+     * @param $BrandID
+     * @param $DeviceID
+     * @param bool $success
+     * @return string
+     */
+    public function logConsoleWeb(
+        $DisplayNameCN,
+        $BrandName,
+        $BrandID,
+        $DeviceID,
+        $success = true)
+    {
+        $result = '';
+        $result .= date('Y-m-d H:i:s') . ' ';
+        $result .= '中文名称=' . $DisplayNameCN . ' ';
+        $result .= '英文名称=' . (is_null($BrandName) ? 'null' : $BrandName) . ' ';
+        $result .= '品牌ID=' . $BrandID . ' ';
+        $result .= '设备ID=' . $DeviceID . ' ';
+        $result .= $success ? '执行成功' : '执行失败';
+        $result .= '<br/>';
+        return $result;
     }
 } 

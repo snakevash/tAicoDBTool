@@ -4,35 +4,19 @@
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon">
-                        <i class="icon-th"></i>
+                        <i class="icon-th-list"></i>
                     </span>
-                    <h5>上传成功</h5>
+                    <h5>导入遥控器成功</h5>
                 </div>
-                <div class="widget-content nopadding">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>新增品牌英文</th>
-                            <th>新增品牌中文</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Row 1</td>
-                            <td>Row 2</td>
-                            <td>Row 3</td>
-                            <td>Row 4</td>
-                        </tr>
-                        <tr>
-                            <td>Row 1</td>
-                            <td>Row 2</td>
-                            <td>Row 3</td>
-                            <td>Row 4</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="widget-content">
+                    <?php
+                        foreach($response as $line){
+                            echo $line;
+                        }
+                    ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+

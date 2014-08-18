@@ -118,6 +118,18 @@ $app->get('/brand/index', function () use ($app, $mainPhp) {
     ));
 });
 
+# 品牌上传
+$app->post('/brand/deal',function()use($app,$mainPhp){
+    $mainPhp['pageName'] = '品牌';
+    $mainPhp['navName'] = '品牌';
+    $mainPhp['isBrand'] = true;
+
+
+    $app->render('brand/upload/success.php',array(
+        'mainPhp'=>$mainPhp
+    ));
+});
+
 # 遥控器上传
 $app->get('/controller/index', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '遥控器';
@@ -130,17 +142,23 @@ $app->get('/controller/index', function () use ($app, $mainPhp) {
 });
 
 # 遥控器上传文件处理
-$app->post('/controller/deal', function () use ($app) {
+$app->post('/controller/deal', function () use ($app, $mainPhp) {
+    $mainPhp['pageName'] = '遥控器';
+    $mainPhp['navName'] = '遥控器';
+    $mainPhp['isController'] = true;
+
     $r = handlerUploadFile('fileupload',UPLOADPATHBRANDS,'brands.xls');
 
     if ($r) {
-        var_dump(scandir(UPLOADPATHBRANDS));
-//        $sBrand = new \Snake\Services\BrandServices();
-//        $sfiles = \Snake\FileInfo::getFilePathInfo(OtherConfig::BRANDS);
-//        $tempr = $sBrand->runInsertBrandMain($sfiles[0]);
-//        if ($tempr) {
-//            echo '更新品牌成功';
-//        }
+        $sBrand = new \Snake\Services\BrandServices();
+        $sfiles = \Snake\FileInfo::getFilePathInfo(UPLOADPATHBRANDS);
+        $tempr = $sBrand->runInsertBrandMain($sfiles[0]);
+        if (count($tempr) > 0) {
+            $app->render('controller/upload/success.php',array(
+                'mainPhp' => $mainPhp,
+                'response' => $tempr,
+            ));
+        }
     }
 });
 
