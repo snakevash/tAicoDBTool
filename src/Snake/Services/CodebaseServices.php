@@ -28,7 +28,22 @@ class CodebaseServices
      */
     public function getFileContent($file)
     {
+        $filecontent = file_get_contents($file);
+        $codetype = array('ASCII','GB2312','GBK','UTF-8');
+
+        # 检测是否需要重新编码
+        $encodeType = mb_detect_encoding($filecontent, $codetype ,true);
+        if($encodeType != 'UTF-8'){
+            $filecontent = mb_convert_encoding($filecontent,'UTF-8',$encodeType);
+        }
+
+        # 检查写入文件成功
+        if(!file_put_contents($file,$filecontent)){
+            return false;
+        }
+
         $csvFile = new \Keboola\Csv\CsvFile($file);
+
         $clearedData = array(
             'controllerData' => array(),
             'codebasesData' => array()
@@ -100,14 +115,20 @@ class CodebaseServices
         $db = new \medoo(\DBFileConfig::$dbinfo);
         # 清洗过的数据
         $data = $this->getFileContent($file);
+
+        # 如果文件没有解析成功
+        # 移动到fail文件夹
+        if(!$data){
+
+        }
+
         # 品牌ID
         $bdb = new BrandDB($db);
         # 查表获得品牌ID 用英文来匹配
         $ControllerBrandID = $bdb->getBrandIDByEn(strtoupper($data['controllerData']['ControllerBrand']));
         # 设备ID
         $ControllerDeviceID = DeviceInfo::$NameMap[$data['controllerData']['ControllerDevice']];
-        # 协议ID
-        # todo 协议id是根据协议代码库查询的
+
         # 该遥控器下面所属的协议
         $hasProtocol = array();
 
@@ -140,6 +161,7 @@ class CodebaseServices
                 array_push($hasProtocol, $tid);
             }
         }
+
         # todo 清理数组中重复的数据
 
         # 把遥控器信息插入到数据库

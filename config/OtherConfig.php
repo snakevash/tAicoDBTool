@@ -25,6 +25,11 @@ class OtherConfig
     const CODEBASEAFTER = './codebaseafter';
 
     /**
+     * 红外代码导入失败的文件夹
+     */
+    const CODEBASEFAIL = './codebasefail';
+
+    /**
      * 红外代码导入之前的文件夹
      */
     const CODEBASEBEFORE = './codebasebefore';

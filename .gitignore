@@ -2,6 +2,7 @@
 /vendor
 /codebasebefore
 /codebaseafter
+/codebasefail
 composer.phar
 composer.lock
 .DS_Store

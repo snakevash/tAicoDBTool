@@ -33,7 +33,11 @@ function handlerUploadFile($fileTarget = 'fileupload', $filePath = '', $fileName
             $fullFilePath = $filePath . DIRECTORY_SEPARATOR . $fileName;
         }
         move_uploaded_file($_FILES[$fileTarget]['tmp_name'], $fullFilePath);
-        return chmod($fullFilePath, 0777);
+        if(chmod($fullFilePath, 0777)){
+            return $fullFilePath;
+        } else {
+            return false;
+        }
     }
     return false;
 }
@@ -119,15 +123,24 @@ $app->get('/brand/index', function () use ($app, $mainPhp) {
 });
 
 # 品牌上传
-$app->post('/brand/deal',function()use($app,$mainPhp){
+$app->post('/brand/deal', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '品牌';
     $mainPhp['navName'] = '品牌';
     $mainPhp['isBrand'] = true;
 
+    $r = handlerUploadFile('fileupload', UPLOADPATHBRANDS, 'brands.xls');
 
-    $app->render('brand/upload/success.php',array(
-        'mainPhp'=>$mainPhp
-    ));
+    if ($r) {
+        $sBrand = new \Snake\Services\BrandServices();
+        $sfiles = \Snake\FileInfo::getFilePathInfo(UPLOADPATHBRANDS);
+        $tempr = $sBrand->runInsertBrandMain($sfiles[0]);
+        if (count($tempr) > 0) {
+            $app->render('brand/upload/success.php', array(
+                'mainPhp' => $mainPhp,
+                'response' => $tempr,
+            ));
+        }
+    }
 });
 
 # 遥控器上传
@@ -147,14 +160,13 @@ $app->post('/controller/deal', function () use ($app, $mainPhp) {
     $mainPhp['navName'] = '遥控器';
     $mainPhp['isController'] = true;
 
-    $r = handlerUploadFile('fileupload',UPLOADPATHBRANDS,'brands.xls');
+    $r = handlerUploadFile('fileupload', UPLOADPATHCODEBASEBEFORE);
+    $tempr = array();
 
     if ($r) {
-        $sBrand = new \Snake\Services\BrandServices();
-        $sfiles = \Snake\FileInfo::getFilePathInfo(UPLOADPATHBRANDS);
-        $tempr = $sBrand->runInsertBrandMain($sfiles[0]);
-        if (count($tempr) > 0) {
-            $app->render('controller/upload/success.php',array(
+        $tempr[] = $r . ' 已经导入成功。<br>';
+        if ($tempr) {
+            $app->render('controller/upload/success.php', array(
                 'mainPhp' => $mainPhp,
                 'response' => $tempr,
             ));
