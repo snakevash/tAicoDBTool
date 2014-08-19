@@ -185,4 +185,13 @@ class BrandDB
             return false;
         }
     }
+
+    /**
+     * 获得品牌的数量
+     *
+     * @return int
+     */
+    public function getBrandsNumber(){
+        return $this->db->count('brand','*');
+    }
 } 

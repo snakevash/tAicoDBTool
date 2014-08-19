@@ -7,7 +7,7 @@
  * Time: 下午7:44
  */
 
-class ControllerDBTest extends PHPUnit_Framework_TestCase {
+class ControllerDBTest extends \PHPUnit_Framework_TestCase {
     protected $db;
 
     function __construct()
@@ -27,6 +27,24 @@ class ControllerDBTest extends PHPUnit_Framework_TestCase {
 //            'testLogo',
 //            '1');
 //        $this->assertEquals(113,$id,'测试插入遥控器数据库');
+    }
+
+    /**
+     * @test
+     */
+    public function getControllersNumber(){
+//        $model = new \Snake\ControllerDB($this->db);
+//        $n = $model->getControllersNumber();
+//        $this->assertTrue($n > 0,'测试');
+    }
+
+    /**
+     * @test
+     */
+    public function getControllersDescLimit100(){
+        $model = new \Snake\ControllerDB($this->db);
+        $r = $model->getControllersDescLimit100();
+        $this->assertTrue(count($r)>0,'测试');
     }
 }
  

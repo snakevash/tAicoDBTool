@@ -203,4 +203,39 @@ class ControllerDB
             return false;
         }
     }
+
+
+    /**
+     * 获得遥控器的数量
+     *
+     * @return int
+     */
+    public function getControllersNumber(){
+        $r = $this->db->count('controller','*');
+        return $r;
+    }
+
+    /**
+     * 获得最近上传的100
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getControllersDescLimit100($limit = 100){
+        $sql = "
+            select c.ControllerID,c.ControllerName,c.ControllerNameCN,b.BrandName,
+            d.DeviceName,c.ControllerImage,c.HasNumberPad,c.SourceFrom,c.LastModAt
+            from controller c
+
+            left join brand b
+                on b.BrandID = c.ControllerBrand
+            left join device d
+                on d.DeviceID = c.ControllerDevice
+
+            order by c.ControllerID desc
+            limit {$limit}
+        ";
+
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

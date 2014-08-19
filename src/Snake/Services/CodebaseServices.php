@@ -118,10 +118,12 @@ class CodebaseServices
     /**
      * 插入红外代码数据库
      *
-     * @param $file string 红外代码文件
-     * @return array|bool
+     * @param $file
+     * @param bool $isWeb
+     * @param string $webpath web的文件地址
+     * @return bool
      */
-    public function runInsertCodebaseMain($file)
+    public function runInsertCodebaseMain($file,$isWeb = false, $webpath = '')
     {
         # 数据库
         $db = new \medoo(\DBFileConfig::$dbinfo);
@@ -131,7 +133,12 @@ class CodebaseServices
         # 如果文件没有解析成功
         # 移动到fail文件夹
         if(!$data){
-            FileInfo::rmCodeBaseFileToFail($file);
+            if($isWeb){
+                $r = FileInfo::rmCodeBaseFileToFailWeb($file,$webpath);
+            } else {
+                $r = FileInfo::rmCodeBaseFileToFail($file);
+            }
+            return array('result'=>$r,'operationType'=>'上传文件');
         }
 
         # 品牌ID
@@ -235,12 +242,10 @@ class CodebaseServices
 
 
         # 把红外代码数据插入到数据库
-        # todo 增加出错处理
         $cbdb = new CodebaseDB($db);
         $CodeGroup3Index = range(100, 149, 1);
         $CodeGroup4Index = range(150, 255, 1);
         # 可能会分配完，但是至今没有碰见过
-
 
         # 遥控器是否已经在数据
         # 不存在就直接insert
@@ -382,9 +387,15 @@ class CodebaseServices
             }
         }
 
-
-        $r = FileInfo::rmCodeBaseFilePath($file);
-        return $r;
+        $r = false;
+        if($isWeb){
+            # 调用web端的文件夹移动
+            $r = FileInfo::rmCodeBaseFilePathWeb($file,$webpath);
+        } else {
+            # 调用console端的文件夹移动
+            $r = FileInfo::rmCodeBaseFilePath($file);
+        }
+        return array('result'=>$r,'operationType'=>'导入代码');
     }
 
     /**

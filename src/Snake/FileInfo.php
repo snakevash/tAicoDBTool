@@ -34,6 +34,19 @@ class FileInfo
     }
 
     /**
+     * 获得文件名称
+     *
+     * @param $file
+     * @return mixed
+     */
+    public static function getFileName($file){
+        $fileinfo = explode(DIRECTORY_SEPARATOR,$file);
+        $filename = array_pop($fileinfo);
+
+        return $filename;
+    }
+
+    /**
      * 移动处理过的红外代码
      *
      * @param $file
@@ -49,6 +62,22 @@ class FileInfo
     }
 
     /**
+     * web 移动处理完的代码文件
+     *
+     * @param string $file 完整地址的文件地址
+     * @param string $path web端的地址用常量来表示的
+     * @return bool
+     */
+    public static function rmCodeBaseFilePathWeb($file,$path){
+        $fileinfo = explode(DIRECTORY_SEPARATOR,$file);
+        $filename = array_pop($fileinfo);
+        $newname = $path . DIRECTORY_SEPARATOR . $filename;
+
+        $r = rename($file,$newname);
+        return $r;
+    }
+
+    /**
      * 移动处理过的红外代码到失败文件夹
      *
      * @param $file
@@ -58,6 +87,22 @@ class FileInfo
         $fileinfo = explode(DIRECTORY_SEPARATOR,$file);
         $filename = array_pop($fileinfo);
         $newname = \OtherConfig::CODEBASEFAIL . DIRECTORY_SEPARATOR . $filename;
+
+        $r = rename($file,$newname);
+        return $r;
+    }
+
+    /**
+     * web端 移动处理过的红外代码到失败文件夹
+     *
+     * @param $file
+     * @param $path
+     * @return bool
+     */
+    public static function rmCodeBaseFileToFailWeb($file,$path){
+        $fileinfo = explode(DIRECTORY_SEPARATOR,$file);
+        $filename = array_pop($fileinfo);
+        $newname = $path . DIRECTORY_SEPARATOR . $filename;
 
         $r = rename($file,$newname);
         return $r;

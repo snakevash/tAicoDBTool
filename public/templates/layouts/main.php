@@ -115,6 +115,19 @@
                 </li>
             </ul>
         </li>
+        <li class="submenu">
+            <a href="javascript:void(0);">
+                <i class="icon icon-th-list"></i>
+                <span>额外功能</span>
+                <span class="label">1</span>
+            </a>
+            <ul>
+                <li>
+                    <!-- 模块/动作/目标/条件 -->
+                    <a href="/options/select/controller/limit100">查看最近上传遥控器</a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>
 

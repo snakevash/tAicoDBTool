@@ -204,4 +204,13 @@ class CodebaseDB
             return false;
         }
     }
+
+    /**
+     * 获得遥控器代码的数量
+     *
+     * @return int
+     */
+    public function getCodesNumber(){
+        return $this->db->count('codebase','*');
+    }
 }

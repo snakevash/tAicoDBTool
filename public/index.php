@@ -10,6 +10,9 @@
 define('UPLOADPATHBRANDS', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'brands');
 define('UPLOADPATHCODEBASEBEFORE', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'codebasebefore');
 define('UPLOADPATHCODEBASEAFTER', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'codebaseafter');
+define('UPLOADPATHCODEBASEFAIL', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'codebasefail');
+define('UPLOADPATHBRANDAFTER', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'brandafter');
+define('UPLOADPATHBRANDBEFORE', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'brandbefore');
 
 
 require_once '../vendor/autoload.php';
@@ -33,7 +36,7 @@ function handlerUploadFile($fileTarget = 'fileupload', $filePath = '', $fileName
             $fullFilePath = $filePath . DIRECTORY_SEPARATOR . $fileName;
         }
         move_uploaded_file($_FILES[$fileTarget]['tmp_name'], $fullFilePath);
-        if(chmod($fullFilePath, 0777)){
+        if (chmod($fullFilePath, 0777)) {
             return $fullFilePath;
         } else {
             return false;
@@ -101,8 +104,12 @@ $mainPhp = array(
 # 主页
 $app->get('/', function () use ($app, $mainPhp) {
     $mainPhp['leftSubMenu'] = false;
+
+    $optionsModel = new \Snake\Services\OptionsServices();
+
     $app->render('index.php', array(
-        'mainPhp' => $mainPhp
+        'mainPhp' => $mainPhp,
+        'response' => array('tags' => $optionsModel->getThreeTags())
     ));
 });
 
@@ -164,14 +171,26 @@ $app->post('/controller/deal', function () use ($app, $mainPhp) {
     $tempr = array();
 
     if ($r) {
-        $tempr[] = $r . ' 已经导入成功。<br>';
-        if ($tempr) {
-            $app->render('controller/upload/success.php', array(
-                'mainPhp' => $mainPhp,
-                'response' => $tempr,
-            ));
+        $tempr[] = '上传文件成功。<br/>';
+        $sCodeBaes = new \Snake\Services\CodebaseServices();
+        $files = \Snake\FileInfo::getFilePathInfo(UPLOADPATHCODEBASEBEFORE);
+        foreach ($files as $file) {
+            $r = $sCodeBaes->runInsertCodebaseMain($file, true, UPLOADPATHCODEBASEAFTER);
+            $tfilename = \Snake\FileInfo::getFileName($file);
+            if ($r['result']) {
+                $tempr[] = "文件: {$tfilename} {$r['operationType']} 成功! <br/>";
+            } else {
+                $tempr[] = "文件: {$tfilename} {$r['operationType']} 失败! <br/>";
+            }
         }
+    } else {
+        $tempr[] = '上传文件失败。<br/>';
     }
+
+    $app->render('controller/upload/success.php', array(
+        'mainPhp' => $mainPhp,
+        'response' => $tempr,
+    ));
 });
 
 # 系列上传
