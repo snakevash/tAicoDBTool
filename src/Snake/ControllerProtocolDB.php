@@ -38,7 +38,6 @@ class ControllerProtocolDB
      */
     public function insert(
         $Protocol = '',
-        #$UserCode = '',
         $ControllerProtocolFlag = '',
         $RetransFrame = '',
         $TVFormat = '',
@@ -48,7 +47,6 @@ class ControllerProtocolDB
     {
         $id = $this->db->insert('protocol', array(
             'Protocol' => $Protocol,
-            #'UserCode' => $UserCode,
             'ControllerProtocolFlag' => $ControllerProtocolFlag,
             'RetransFrame' => $RetransFrame,
             'TVFormat' => $TVFormat,

@@ -58,6 +58,19 @@ class CodebaseServices
                     $tmp[$key] = trim($row[$value['X']]);
                 }
 
+                # 判断是否是有限机顶盒
+                if(
+                    isset($tmp['ControllerDevice'])
+                    && $tmp['ControllerDevice'] == 'CableTV'
+                )
+                {
+                    $tmpKeys = explode('~~',$tmp['ControllerName']);
+                    $tmp['ControllerName'] = $tmpKeys[1];
+                    $tmp['ControllerNameCN'] = $tmpKeys[0];
+                } else {
+                    $tmp['ControllerNameCN'] = ''; # 默认是为空
+                }
+
                 $clearedData['controllerData'] = $tmp;
             }
 
@@ -77,7 +90,6 @@ class CodebaseServices
                 $tmp['CodeKey'] = $this->getCodeKey($tmp);
                 array_push($clearedData['codebasesData'], $tmp);
             }
-
         }
 
         return $clearedData;
@@ -119,7 +131,7 @@ class CodebaseServices
         # 如果文件没有解析成功
         # 移动到fail文件夹
         if(!$data){
-
+            FileInfo::rmCodeBaseFileToFail($file);
         }
 
         # 品牌ID
@@ -132,7 +144,8 @@ class CodebaseServices
         # 该遥控器下面所属的协议
         $hasProtocol = array();
 
-        # 协议录入部分
+        # 协议录入部分开始
+
         # 数据记录该遥控器下面所有的协议名称
         $cpdb = new ControllerProtocolDB($db);
         foreach ($data['codebasesData'] as $index => $unit) {
@@ -140,13 +153,13 @@ class CodebaseServices
             if (empty($unit['Protocol']) && $unit['Protocol'] != "0") {
                 continue;
             }
+
             # 是否存在该协议
             $insertedProtocoled = $cpdb->isInserted($unit['Protocol']);
             # 不存在该协议就插入数据库
             if (!$insertedProtocoled) {
                 $tid = $cpdb->insert(
                     trim($unit['Protocol']),
-                    #$unit['UserCode'],
                     trim($unit['ControllerProtocolFlag']),
                     trim($unit['RetransFrame']),
                     trim($unit['TVFormat']),
@@ -154,7 +167,9 @@ class CodebaseServices
                     trim($unit['DataCycle']),
                     trim($unit['DataBits'])
                 );
+
                 # todo 插入协议数据日志
+
                 array_push($hasProtocol, $tid);
             } else {
                 $tid = $cpdb->getProtocolID($unit['Protocol']);
@@ -162,7 +177,10 @@ class CodebaseServices
             }
         }
 
-        # todo 清理数组中重复的数据
+        # 该控制器下面所属的协议结束
+
+        # 清理数组中重复的数据 提高性能
+        $hasProtocol = array_unique($hasProtocol);
 
         # 把遥控器信息插入到数据库
         $cdb = new ControllerDB($db);
@@ -178,22 +196,26 @@ class CodebaseServices
                 trim($ControllerDeviceID),
                 'defaultcontrollericon',
                 $data['controllerData']['HasNumber'] == '有' ? 1 : 0,
-                trim($data['controllerData']['SourceFrom'])
+                trim($data['controllerData']['SourceFrom']),
+                trim($data['controllerData']['ControllerNameCN'])
             );
 
             $tcpdb = new TControllerProtocol($db);
+
             # 维护关系表
             foreach ($hasProtocol as $index => $value) {
                 $insertedControllerProtocol = $tcpdb->isInserted($CodeController, $value);
+
                 # todo 维护遥控器-协议关系表日志
                 if (!$insertedControllerProtocol) {
                     $tcpdb->insert($CodeController, $value);
                 }
             }
+
         } else {
             # 已经录入过了
             # 更新原来的数据
-            # 现在只提供修补遥控器品牌的功能
+            # 只提供修补遥控器品牌的功能
 
             $CodeController = $cdb->getControllerIDByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'], 0, $ControllerDeviceID);
             $CodeController = $cdb->update(
@@ -206,10 +228,9 @@ class CodebaseServices
                 trim($ControllerDeviceID),
                 'defaultcontrollericon',
                 $data['controllerData']['HasNumber'] == '有' ? 1 : 0,
-                trim($data['controllerData']['SourceFrom'])
+                trim($data['controllerData']['SourceFrom']),
+                trim($data['controllerData']['ControllerNameCN'])
             );
-
-            # return false;
         }
 
 

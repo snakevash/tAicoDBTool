@@ -30,6 +30,7 @@ class ControllerDB
      * @param $ControllerProtocol
      * @param $ControllerType
      * @param $ControllerName
+     * @param string $ControllerNameCN
      * @param $ControllerSeries
      * @param $ControllerBrand
      * @param $ControllerDevice
@@ -47,7 +48,9 @@ class ControllerDB
         $ControllerDevice,
         $ControllerImage,
         $HasNumberPad,
-        $SourceFrom)
+        $SourceFrom,
+        $ControllerNameCN
+    )
     {
         $id = $this->db->insert('controller', array(
             'ControllerProtocol' => $ControllerProtocol,
@@ -58,7 +61,8 @@ class ControllerDB
             'ControllerDevice' => $ControllerDevice,
             'ControllerImage' => $ControllerImage,
             'HasNumberPad' => $HasNumberPad,
-            'SourceFrom' => $SourceFrom
+            'SourceFrom' => $SourceFrom,
+            'ControllerNameCN' => $ControllerNameCN
         ));
 
         return $id;
@@ -77,6 +81,7 @@ class ControllerDB
      * @param $ControllerImage
      * @param $HasNumberPad
      * @param $SourceFrom
+     * @param string $ControllerNameCN
      * @return bool
      */
     public function update(
@@ -89,7 +94,9 @@ class ControllerDB
         $ControllerDevice,
         $ControllerImage,
         $HasNumberPad,
-        $SourceFrom)
+        $SourceFrom,
+        $ControllerNameCN = ''
+    )
     {
         $r = $this->db->update('controller', array(
             'ControllerProtocol' => $ControllerProtocol,
@@ -100,7 +107,8 @@ class ControllerDB
             'ControllerDevice' => $ControllerDevice,
             'ControllerImage' => $ControllerImage,
             'HasNumberPad' => $HasNumberPad,
-            'SourceFrom' => $SourceFrom
+            'SourceFrom' => $SourceFrom,
+            'ControllerNameCN' => $ControllerNameCN
         ), array(
             'ControllerID' => $ControllerID
         ));
@@ -195,6 +203,4 @@ class ControllerDB
             return false;
         }
     }
-
-
 }
