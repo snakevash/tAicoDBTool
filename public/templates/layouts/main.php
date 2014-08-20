@@ -76,10 +76,13 @@
     <a href="#" class="visible-phone">
         <i class="icon icon-home"></i> 主界面</a>
     <ul>
-        <li class="active">
+        <li class="<?php if($mainPhp['isDashboard']){ echo "active";} ?>">
             <a href="/"><i class="icon icon-home"></i> <span>主界面</span></a>
         </li>
-        <li class="submenu <?php if($mainPhp['leftSubMenu']){ echo 'open';}?>">
+        <li class="submenu
+            <?php if($mainPhp['leftSubMenu']){ echo 'open';}?>
+            <?php if($mainPhp['isFileUpload']){ echo 'active';}?>
+            ">
             <a href="javascript:void(0);">
                 <i class="icon icon-th-list"></i>
                 <span>文件上传</span>
@@ -115,7 +118,10 @@
                 </li>
             </ul>
         </li>
-        <li class="submenu">
+        <li class="submenu
+            <?php if($mainPhp['isOptions']){ echo 'open';}?>
+            <?php if($mainPhp['is100']){ echo 'active';}?>
+            ">
             <a href="javascript:void(0);">
                 <i class="icon icon-th-list"></i>
                 <span>额外功能</span>

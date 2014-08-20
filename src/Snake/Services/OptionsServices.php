@@ -39,5 +39,25 @@ class OptionsServices {
         );
     }
 
-
+    /**
+     * 获得来源的中文
+     *
+     * @param $num
+     * @return string
+     */
+    public function getSourceFormCN($num){
+        switch($num){
+            case '1':
+                return '实体';
+                break;
+            case '2':
+                return 'Peel';
+                break;
+            case '3':
+                return '精灵';
+                break;
+            default:
+                break;
+        }
+    }
 }

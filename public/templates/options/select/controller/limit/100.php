@@ -24,13 +24,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Row 1</td>
-                                <td>Row 2</td>
-                                <td>Row 3</td>
-                                <td>Row 4</td>
-                            </tr>
-
+                            <?php
+                                foreach($response as $i => $e){
+                                    echo "
+                                        <tr>
+                                            <td>{$e['ControllerID']}</td>
+                                            <td>{$e['ControllerName']}</td>
+                                            <td>{$e['ControllerNameCN']}</td>
+                                            <td>{$e['BrandName']}</td>
+                                            <td>{$e['DeviceName']}</td>
+                                            <td>{$e['ControllerImage']}</td>
+                                            <td>{$e['HasNumberPad']}</td>
+                                            <td>{$e['SourceFrom']}</td>
+                                            <td>{$e['LastModAt']}</td>
+                                        </tr>
+                                    ";
+                                }
+                            ?>
                         </tbody>
                     </table>
                 </div>

@@ -93,10 +93,14 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
 
 # 全局配置
 $mainPhp = array(
+    'isFileUpload' => false,
+    'isDashboard' => false,
     'leftSubMenu' => true,
     'isBrand' => false,
     'isController' => false,
     'isSerie' => false,
+    'isOptions' =>false,
+    'is100' =>false,
     'pageName' => '主页面',
     'navName' => '主页面',
 );
@@ -104,6 +108,7 @@ $mainPhp = array(
 # 主页
 $app->get('/', function () use ($app, $mainPhp) {
     $mainPhp['leftSubMenu'] = false;
+    $mainPhp['isDashboard'] = true;
 
     $optionsModel = new \Snake\Services\OptionsServices();
 
@@ -123,6 +128,7 @@ $app->get('/brand/index', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '品牌';
     $mainPhp['navName'] = '品牌';
     $mainPhp['isBrand'] = true;
+    $mainPhp['isFileUpload'] = true;
 
     $app->render('brand/index.php', array(
         'mainPhp' => $mainPhp
@@ -134,17 +140,28 @@ $app->post('/brand/deal', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '品牌';
     $mainPhp['navName'] = '品牌';
     $mainPhp['isBrand'] = true;
+    $mainPhp['isFileUpload'] = true;
 
-    $r = handlerUploadFile('fileupload', UPLOADPATHBRANDS, 'brands.xls');
+    $r = handlerUploadFile('fileupload', UPLOADPATHBRANDBEFORE);
 
     if ($r) {
         $sBrand = new \Snake\Services\BrandServices();
-        $sfiles = \Snake\FileInfo::getFilePathInfo(UPLOADPATHBRANDS);
-        $tempr = $sBrand->runInsertBrandMain($sfiles[0]);
-        if (count($tempr) > 0) {
+        $sfiles = \Snake\FileInfo::getFilePathInfo(UPLOADPATHBRANDBEFORE);
+        $tempr = array();
+
+        foreach($sfiles as $file){
+            $tempr[] = $sBrand->runInsertBrandMain($file,true,UPLOADPATHBRANDAFTER);
+        }
+
+        if (count($tempr[0]) > 0) {
             $app->render('brand/upload/success.php', array(
                 'mainPhp' => $mainPhp,
                 'response' => $tempr,
+            ));
+        } else {
+            $app->render('brand/upload/fail.php', array(
+                'mainPhp' => $mainPhp,
+                'response' => array(array('遥控器数据都存在于数据库 没有增加新的遥控器')),
             ));
         }
     }
@@ -155,6 +172,7 @@ $app->get('/controller/index', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '遥控器';
     $mainPhp['navName'] = '遥控器';
     $mainPhp['isController'] = true;
+    $mainPhp['isFileUpload'] = true;
 
     $app->render('controller/index.php', array(
         'mainPhp' => $mainPhp
@@ -166,6 +184,7 @@ $app->post('/controller/deal', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '遥控器';
     $mainPhp['navName'] = '遥控器';
     $mainPhp['isController'] = true;
+    $mainPhp['isFileUpload'] = true;
 
     $r = handlerUploadFile('fileupload', UPLOADPATHCODEBASEBEFORE);
     $tempr = array();
@@ -198,9 +217,35 @@ $app->get('/serie/index', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '系列';
     $mainPhp['navName'] = '系列';
     $mainPhp['isSerie'] = true;
+    $mainPhp['isFileUpload'] = true;
 
     $app->render('serie/index.php', array(
         'mainPhp' => $mainPhp
+    ));
+});
+
+# 额外功能模块
+$app->get('/options/select/controller/limit100', function () use ($app, $mainPhp) {
+    $mainPhp['pageName'] = '最近上传的100个遥控器';
+    $mainPhp['navName'] = '最近上传的100个遥控器';
+    $mainPhp['isOptions'] = true;
+    $mainPhp['is100'] = true;
+    $mainPhp['leftSubMenu'] = false;
+
+    $db = new \medoo(\DBFileConfig::$dbinfo);
+    $s = new \Snake\ControllerDB($db);
+    $os = new \Snake\Services\OptionsServices();
+    $r = $s->getControllersDescLimit100();
+
+    $t = array_map(function ($e) use ($os) {
+        $e['HasNumberPad'] = $e['HasNumberPad'] == 1 ? "有" : "无";
+        $e['SourceFrom'] = $os->getSourceFormCN($e['SourceFrom']);
+        return $e;
+    }, $r);
+
+    $app->render('options/select/controller/limit/100.php', array(
+        'mainPhp' => $mainPhp,
+        'response' => $t
     ));
 });
 

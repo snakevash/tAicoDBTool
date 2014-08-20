@@ -161,7 +161,7 @@ class BrandDB
             'DeviceID' => $DeviceID
         ));
 
-        return $r;
+        return $r == '0';
     }
 
     /**

@@ -11,6 +11,7 @@ namespace Snake\Services;
 
 
 use Snake\BrandDB;
+use Snake\FileInfo;
 
 class BrandServices
 {
@@ -28,21 +29,18 @@ class BrandServices
         $sheetData = $PHPExcel->getActiveSheet()->toArray(null, true, true, true);
         $clearedData = array();
 
-        foreach (\BrandConfig::$brands as $k => $v) {
-            $tmp = array();
-            for ($i = $v['startline']; $i < $v['endline']; $i++) {
-                $ttmp = array(
-                    'CN' => trim(strtoupper($sheetData[$i][\BrandConfig::$columns['CN']])),
-                    'EN' => trim(strtoupper($sheetData[$i][\BrandConfig::$columns['EN']]))
-                );
-                array_push($tmp, $ttmp);
-            }
-
-            $clearedData[$k] = array(
-                'DeviceID' => $v['DeviceID'],
-                'Data' => $tmp
-            );
+        $tmp = array();
+        foreach($sheetData as $line){
+            array_push($tmp,array(
+                'CN' => trim(strtoupper($line['B'])),
+                'EN' => trim(strtoupper($line['C']))
+            ));
         }
+
+        $clearedData[$sheetData[1]['A']] = array(
+            'DeviceID' => \BrandConfig::$brands[$sheetData[1]['A']]['DeviceID'],
+            'Data' => $tmp
+        );
 
         return $clearedData;
     }
@@ -51,9 +49,11 @@ class BrandServices
      * 插入品牌数据表
      *
      * @param $file
-     * @return bool
+     * @param bool $isWeb
+     * @param string $webpath
+     * @return array
      */
-    public function runInsertBrandMain($file)
+    public function runInsertBrandMain($file,$isWeb = false, $webpath = '')
     {
         # 遍历数据结构
         $data = $this->getFileContent($file);
@@ -119,6 +119,12 @@ class BrandServices
                     }
                 }
             }
+        }
+
+        if($isWeb){
+            FileInfo::rmBrandFilePathWeb($file,$webpath);
+        } else {
+            FileInfo::rmBrandFilePath($file);
         }
 
         return $results;
