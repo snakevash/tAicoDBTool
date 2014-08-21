@@ -101,6 +101,8 @@ $mainPhp = array(
     'isSerie' => false,
     'isOptions' =>false,
     'is100' =>false,
+    'isOptionsController100'=>false,
+    'isOptionsBrand100'=>false,
     'pageName' => '主页面',
     'navName' => '主页面',
 );
@@ -231,6 +233,7 @@ $app->get('/options/select/controller/limit100', function () use ($app, $mainPhp
     $mainPhp['isOptions'] = true;
     $mainPhp['is100'] = true;
     $mainPhp['leftSubMenu'] = false;
+    $mainPhp['isOptionsController100'] = true;
 
     $db = new \medoo(\DBFileConfig::$dbinfo);
     $s = new \Snake\ControllerDB($db);
@@ -246,6 +249,24 @@ $app->get('/options/select/controller/limit100', function () use ($app, $mainPhp
     $app->render('options/select/controller/limit/100.php', array(
         'mainPhp' => $mainPhp,
         'response' => $t
+    ));
+});
+
+$app->get('/options/select/brand/limit100',function()use($app,$mainPhp){
+    $mainPhp['pageName'] = '最近上传的100个品牌';
+    $mainPhp['navName'] = '最近上传的100个品牌';
+    $mainPhp['isOptions'] = true;
+    $mainPhp['is100'] = true;
+    $mainPhp['leftSubMenu'] = false;
+    $mainPhp['isOptionsBrand100'] = true;
+
+    $db = new \medoo(\DBFileConfig::$dbinfo);
+    $s = new \Snake\BrandDB($db);
+    $r = $s->getBrandDescLimit100();
+
+    $app->render('options/select/brand/limit/100.php', array(
+        'mainPhp' => $mainPhp,
+        'response' => $r
     ));
 });
 

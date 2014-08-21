@@ -26,7 +26,9 @@
                     </div>
 
                     <div class="form-actions">
-                        <input type="submit" value="上传" class="btn btn-primary"/>
+                        <input type="submit" value="上传" class="btn btn-primary"
+                            onclick="return checkUploadFileExt(getUploadFileExt())"
+                            />
                     </div>
                 </form>
             </div>
@@ -36,7 +38,23 @@
 
 <script src="/js/jquery.liteuploader.js" type="text/javascript"></script>
 <script type="text/javascript">
+
+    // 获得上传文件后缀
+    getUploadFileExt = function(){
+        return $("[name=fileupload]").val().split('.').pop();
+    }
+
+    checkUploadFileExt = function(ext){
+        if(ext != 'csv'){
+            alert('上传文件必须为csv文件');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     $(function(){
+        // 过滤掉文件后缀
 
     })
 </script>

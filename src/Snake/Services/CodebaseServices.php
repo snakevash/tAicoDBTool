@@ -10,6 +10,7 @@
 namespace Snake\Services;
 
 
+use Keboola\Csv\Exception;
 use Snake\BrandDB;
 use Snake\CodebaseDB;
 use Snake\ControllerDB;
@@ -125,10 +126,22 @@ class CodebaseServices
      */
     public function runInsertCodebaseMain($file,$isWeb = false, $webpath = '')
     {
+        # 检查文件后缀
+        # 如果文件的后缀不是csv 那么就删除
+        $fileinfotemp = pathinfo($file);
+        if(strtolower($fileinfotemp['extension']) != 'csv'){
+            @unlink($file);
+            return array('result'=>false,'operationType'=>'上传文件');
+        }
+
+
         # 数据库
         $db = new \medoo(\DBFileConfig::$dbinfo);
+
         # 清洗过的数据
         $data = $this->getFileContent($file);
+
+
 
         # 如果文件没有解析成功
         # 移动到fail文件夹

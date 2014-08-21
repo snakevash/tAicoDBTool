@@ -24,7 +24,12 @@ class FileInfo
 
         $tmpDir = dir($dir);
         while ($file = $tmpDir->read()) {
-            if (!(is_dir("$dir" . DIRECTORY_SEPARATOR . "$file")) && ($file != '.') && ($file != '..')) {
+            # 增加git的过滤文件
+            if (!(is_dir("$dir" . DIRECTORY_SEPARATOR . "$file"))
+                && ($file != '.')
+                && ($file != '..')
+                && ($file != '.gitignore')
+                ) {
                 array_push($filesArray, "$dir/$file");
             }
         }

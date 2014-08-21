@@ -194,4 +194,26 @@ class BrandDB
     public function getBrandsNumber(){
         return $this->db->count('brand','*');
     }
+
+    /**
+     * 获得最近上传品牌
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getBrandDescLimit100($limit = 100){
+        $sql = "
+            SELECT b.BrandID,b.BrandName,b.DisplayNameCN,d.DeviceName,d.DisplayNameCN as DisplayNameCNDevice,b.LastModAt
+            FROM brand b
+
+            left join t_device_brand tdb
+                on tdb.BrandID = b.BrandID
+            left join device d
+                on tdb.DeviceID = d.DeviceID
+
+            order by b.BrandID desc limit {$limit}
+        ";
+
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
 } 

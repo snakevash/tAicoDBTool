@@ -26,7 +26,9 @@
                         </div>
 
                         <div class="form-actions">
-                            <input type="submit" value="上传" class="btn btn-primary"/>
+                            <input type="submit" value="上传" class="btn btn-primary"
+                                onclick="return checkUploadFileExt(getUploadFileExt())"
+                                />
                         </div>
                     </div>
                 </form>
@@ -34,3 +36,18 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    // 获得上传文件后缀
+    getUploadFileExt = function(){
+        return $("[name=fileupload]").val().split('.').pop();
+    }
+
+    checkUploadFileExt = function(ext){
+        if(ext == 'xlsx' || ext == 'xls'){
+            return true;
+        } else {
+            alert('上传文件必须为Excel文件');
+            return false;
+        }
+    }
+</script>

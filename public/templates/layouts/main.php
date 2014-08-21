@@ -125,12 +125,27 @@
             <a href="javascript:void(0);">
                 <i class="icon icon-th-list"></i>
                 <span>额外功能</span>
-                <span class="label">1</span>
+                <span class="label">2</span>
             </a>
             <ul>
-                <li>
+                <li
+                    <?php
+                        if($mainPhp['isOptionsController100']){
+                            echo 'class="active"';
+                        }
+                    ?>
+                    >
                     <!-- 模块/动作/目标/条件 -->
                     <a href="/options/select/controller/limit100">查看最近上传遥控器</a>
+                </li>
+                <li
+                    <?php
+                        if($mainPhp['isOptionsBrand100']){
+                            echo 'class="active"';
+                        }
+                    ?>
+                    >
+                    <a href="/options/select/brand/limit100">查看最近上传品牌</a>
                 </li>
             </ul>
         </li>
