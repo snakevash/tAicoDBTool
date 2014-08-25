@@ -51,7 +51,7 @@ class BrandConfig
             'endline' => 515,
             'DeviceID' => 12
         ),
-        'Screeen' => array(
+        'Screen' => array(
             'startline' => 521,
             'endline' => 534,
             'DeviceID' => 24
@@ -85,6 +85,12 @@ class BrandConfig
             'startline' => 695,
             'endline' => 696,
             'DeviceID' => 28
+        ),
+        'Light' => array(
+            'DeviceID' => 26
+        ),
+        'Toy' => array(
+            'DeviceID' => 18
         )
     );
 

@@ -54,14 +54,20 @@ function handlerUploadFile($fileTarget = 'fileupload', $filePath = '', $fileName
  */
 function handlerUploadFiles($fileTarget = 'fileuploads', $filePath = '')
 {
+    $files = array();
     if (isset($_FILES[$fileTarget])) {
         for ($i = 0; $i < count($_FILES[$fileTarget]['name']); $i++) {
             $fullFilePath = $filePath . DIRECTORY_SEPARATOR . $_FILES['fileupload']['name'][$i];
             move_uploaded_file($_FILES[$fileTarget]['tmp_name'][$i], $fullFilePath);
-            return chmod($fullFilePath, 0777);
+            if (chmod($fullFilePath, 0777)) {
+                $files[] = $fullFilePath;
+            } else {
+                # todo 如果报错 那么就删除所有已经上传的文件
+                return false;
+            }
         }
     }
-    return false;
+    return $files;
 }
 
 # 配置应用
@@ -71,7 +77,7 @@ $app = new \Slim\Slim(array(
     'mode' => 'development',
     'log.enabled' => true,
     'log.level' => \Slim\Log::DEBUG,
-    'log.writer' => new \Slim\LogWriter(fopen("../logs/testlog.txt", "rw")),
+    'log.writer' => new \Slim\LogWriter(fopen("../logs/log.txt", "rw")),
     'view' => '\Slim\LayoutView',
     'layout' => 'layouts/main.php' # 默认布局
 ));
@@ -82,7 +88,7 @@ $app->setName('tAicoDBTool');
 $app->add(new \Slim\Middleware\SessionCookie(array(
     'exipres' => '30 minutes',
     'path' => '/',
-    'domain' => 'tAicoDBTool.com',
+    'domain' => 'taicodbtool.com',
     'secure' => true,
     'httponly' => false,
     'name' => 'aico_session',
@@ -99,10 +105,10 @@ $mainPhp = array(
     'isBrand' => false,
     'isController' => false,
     'isSerie' => false,
-    'isOptions' =>false,
-    'is100' =>false,
-    'isOptionsController100'=>false,
-    'isOptionsBrand100'=>false,
+    'isOptions' => false,
+    'is100' => false,
+    'isOptionsController100' => false,
+    'isOptionsBrand100' => false,
     'pageName' => '主页面',
     'navName' => '主页面',
 );
@@ -144,15 +150,17 @@ $app->post('/brand/deal', function () use ($app, $mainPhp) {
     $mainPhp['isBrand'] = true;
     $mainPhp['isFileUpload'] = true;
 
-    $r = handlerUploadFile('fileupload', UPLOADPATHBRANDBEFORE);
+    $r = handlerUploadFiles('fileupload', UPLOADPATHBRANDBEFORE);
 
-    if ($r) {
+    # 过滤掉相关
+
+    if (is_array($r) && count($r) > 0) {
         $sBrand = new \Snake\Services\BrandServices();
         $sfiles = \Snake\FileInfo::getFilePathInfo(UPLOADPATHBRANDBEFORE);
         $tempr = array();
 
-        foreach($sfiles as $file){
-            $tempr[] = $sBrand->runInsertBrandMain($file,true,UPLOADPATHBRANDAFTER);
+        foreach ($sfiles as $file) {
+            $tempr[] = $sBrand->runInsertBrandMain($file, true, UPLOADPATHBRANDAFTER);
         }
 
         if (count($tempr[0]) > 0) {
@@ -188,10 +196,10 @@ $app->post('/controller/deal', function () use ($app, $mainPhp) {
     $mainPhp['isController'] = true;
     $mainPhp['isFileUpload'] = true;
 
-    $r = handlerUploadFile('fileupload', UPLOADPATHCODEBASEBEFORE);
+    $r = handlerUploadFiles('fileupload', UPLOADPATHCODEBASEBEFORE);
     $tempr = array();
 
-    if ($r) {
+    if (is_array($r) && count($r) > 0) {
         $tempr[] = '上传文件成功。<br/>';
         $sCodeBaes = new \Snake\Services\CodebaseServices();
         $files = \Snake\FileInfo::getFilePathInfo(UPLOADPATHCODEBASEBEFORE);
@@ -252,7 +260,7 @@ $app->get('/options/select/controller/limit100', function () use ($app, $mainPhp
     ));
 });
 
-$app->get('/options/select/brand/limit100',function()use($app,$mainPhp){
+$app->get('/options/select/brand/limit100', function () use ($app, $mainPhp) {
     $mainPhp['pageName'] = '最近上传的100个品牌';
     $mainPhp['navName'] = '最近上传的100个品牌';
     $mainPhp['isOptions'] = true;

@@ -20,9 +20,7 @@
                         </label>
 
                         <div class="controls">
-                            <input type="file"
-                                   name="fileupload"
-                                   id="fileupload"/>
+                            <input type="file" name="fileupload[]" multiple="multiple" />
                         </div>
 
                         <div class="form-actions">
