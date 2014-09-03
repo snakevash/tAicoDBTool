@@ -32,7 +32,7 @@ class BrandServices
         $tmp = array();
         foreach($sheetData as $line){
             array_push($tmp,array(
-                'CN' => trim(strtoupper($line['B'])),
+                'CN' => trim($line['B']),
                 'EN' => trim(strtoupper($line['C']))
             ));
         }
