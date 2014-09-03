@@ -257,7 +257,7 @@ class CodebaseServices
         # 把红外代码数据插入到数据库
         $cbdb = new CodebaseDB($db);
         $CodeGroup3Index = range(100, 149, 1);
-        $CodeGroup4Index = range(150, 255, 1);
+        $CodeGroup4Index = range(150, 255, 1); #
         # 可能会分配完，但是至今没有碰见过
 
         # 遥控器是否已经在数据
@@ -296,6 +296,7 @@ class CodebaseServices
                 if (!$resultInserted) {
                     # 插入出错
                     return false;
+                    # todo 记录相关遥控器的代码
                 }
             }
         } else {

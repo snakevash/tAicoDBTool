@@ -64,8 +64,8 @@ class BrandServices
         foreach ($data as $t => $v) {
             foreach ($v['Data'] as $index => $vv) {
                 $DeviceID = $v['DeviceID'];
-                $BrandName = (is_null($vv['EN']) ? '' : $vv['EN']);
-                $DisplayNameCN = $vv['CN'];
+                $BrandName = (is_null($vv['EN']) ? '' : trim($vv['EN']));
+                $DisplayNameCN = trim($vv['CN']); # 增加空格过滤功能
 
                 # 首先插入Brand信息
                 # 判断品牌是否已经插入过
