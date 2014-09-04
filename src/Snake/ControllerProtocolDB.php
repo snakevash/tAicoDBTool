@@ -91,6 +91,17 @@ class ControllerProtocolDB
     }
 
     /**
+     * 删除协议
+     *
+     * @param $ProtocolID
+     * @return int
+     */
+    public function delete($ProtocolID)
+    {
+        return $this->db->delete('t_controller_protocol', array('ProtocolID' => $ProtocolID));
+    }
+
+    /**
      * 查找协议是否在被使用
      *
      * @param $ProtocolID

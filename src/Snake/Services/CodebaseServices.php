@@ -267,8 +267,14 @@ class CodebaseServices
             if(count($protocolIDs) > count($protocolsInDB)){
                 $diffProtocolsID = array_diff($protocolIDs,$protocolsInDB);
                 foreach($diffProtocolsID as $val){
-                    $tcpdb->delete($CodeControllerID,$protocolIDs); # todo 日志
+                    $tcpdb->delete($CodeControllerID,$val); # todo 日志
+
+                    if($cpdb->getProtocolID($val) < 0){
+                        # 删除该协议 因为没有遥控器使用它了
+                        $cpdb->delete($val);
+                    }
                 }
+
             }
         }
 

@@ -31,7 +31,7 @@ class TControllerProtocolTest extends PHPUnit_Framework_TestCase
      */
     public function isProtocolInUser(){
 //        $model = new \Snake\ControllerProtocolDB($this->db);
-//        $r = $model->isProtocolInUser(38);
+//        $r = $model->isProtocolInUser(10000);
 //        $this->assertTrue(count($r)>0,'测试');
     }
 }
