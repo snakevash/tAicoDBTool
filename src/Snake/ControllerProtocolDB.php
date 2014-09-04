@@ -89,4 +89,17 @@ class ControllerProtocolDB
             return false;
         }
     }
+
+    /**
+     * 查找协议是否在被使用
+     *
+     * @param $ProtocolID
+     * @return int
+     */
+    public function isProtocolInUser($ProtocolID)
+    {
+        return $this->db->count('t_controller_protocol', 'ControllerID', array(
+            'ProtocolID' => $ProtocolID
+        ));
+    }
 }

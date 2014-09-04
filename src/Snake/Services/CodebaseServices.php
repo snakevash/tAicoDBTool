@@ -253,6 +253,28 @@ class CodebaseServices
             );
         }
 
+        # 维护协议-关系表开始
+        # $CodeController 遥控器ID
+        # $hasProtocol 该遥控器csv文件里面
+        $CodeControllerID = $cdb->getControllerIDByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'],$ControllerBrandID,$ControllerDeviceID);
+        $tcpdb = new TControllerProtocol($db);
+        $protocolsInDB = $tcpdb->getProtocolInfoFromControllerID($CodeControllerID);
+        $protocolIDs = array_map(function($unit){
+            return $unit['Protocol'];
+        },$protocolsInDB);
+        if(count($protocolIDs) != count($protocolsInDB)){
+            # 删除数据库里面的多余遥控器-协议关系表
+            if(count($protocolIDs) > count($protocolsInDB)){
+                $diffProtocolsID = array_diff($protocolIDs,$protocolsInDB);
+                foreach($diffProtocolsID as $val){
+                    $tcpdb->delete($CodeControllerID,$protocolIDs); # todo 日志
+                }
+            }
+        }
+
+
+        # 维护协议-关系结束
+
 
         # 把红外代码数据插入到数据库
         $cbdb = new CodebaseDB($db);

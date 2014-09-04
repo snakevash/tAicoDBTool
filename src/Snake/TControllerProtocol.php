@@ -10,7 +10,8 @@
 namespace Snake;
 
 
-class TControllerProtocol {
+class TControllerProtocol
+{
     private $db;
 
     /**
@@ -30,10 +31,11 @@ class TControllerProtocol {
      * @param $ProtocolID
      * @return array
      */
-    public function insert($ControllerID,$ProtocolID){
-        $r = $this->db->insert('t_controller_protocol',array(
-            'ControllerID'=>$ControllerID,
-            'ProtocolID'=>$ProtocolID
+    public function insert($ControllerID, $ProtocolID)
+    {
+        $r = $this->db->insert('t_controller_protocol', array(
+            'ControllerID' => $ControllerID,
+            'ProtocolID' => $ProtocolID
         ));
 
         return $r;
@@ -46,17 +48,61 @@ class TControllerProtocol {
      * @param $ProtocolID
      * @return bool
      */
-    public function isInserted($ControllerID,$ProtocolID){
-        $r = $this->db->select('t_controller_protocol',"*",array(
-            'AND'=>array(
-                'ControllerID'=>$ControllerID,
-                'ProtocolID'=>$ProtocolID
+    public function isInserted($ControllerID, $ProtocolID)
+    {
+        $r = $this->db->select('t_controller_protocol', "*", array(
+            'AND' => array(
+                'ControllerID' => $ControllerID,
+                'ProtocolID' => $ProtocolID
             )
         ));
-        if(count($r) > 0){
+        if (count($r) > 0) {
             return true;
         } else {
             return false;
         }
     }
+
+    /**
+     * 删除遥控器-协议关系
+     *
+     * @param $ControllerID
+     * @param $ProtocolID
+     * @return int
+     */
+    public function delete($ControllerID, $ProtocolID)
+    {
+        return $this->db->delete('t_controller_protocol', array(
+            'AND' => array(
+                'ControllerID' => $ControllerID,
+                'ProtocolID' => $ProtocolID
+            )
+        ));
+    }
+
+    /**
+     * 通过遥控器
+     *
+     * @param $ControllerID
+     * @return array
+     */
+    public function getProtocolInfoFromControllerID($ControllerID)
+    {
+        $sql = "
+            select p.ProtocolID,p.Protocol
+            from protocol as p
+
+            left join t_controller_protocol as tcp
+                on tcp.ProtocolID = p.ProtocolID
+
+            where tcp.ControllerID = ?
+            order by p.ProtocolID
+        ";
+
+        $sql = str_replace('?', $ControllerID, $sql);
+
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
 } 
