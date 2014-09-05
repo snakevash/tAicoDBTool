@@ -251,6 +251,20 @@ class CodebaseServices
                 trim($data['controllerData']['SourceFrom']),
                 trim($data['controllerData']['ControllerNameCN'])
             );
+
+            $CodeControllerID = $cdb->getControllerIDByControllerBrandAndControllerDevice($data['controllerData']['ControllerName'],$ControllerBrandID,$ControllerDeviceID);
+
+            $tcpdb = new TControllerProtocol($db);
+
+            # 维护关系表
+            foreach ($hasProtocol as $index => $value) {
+                $insertedControllerProtocol = $tcpdb->isInserted($CodeControllerID, $value);
+
+                # todo 维护遥控器-协议关系表日志
+                if (!$insertedControllerProtocol) {
+                    $tcpdb->insert($CodeControllerID, $value);
+                }
+            }
         }
 
         # 维护协议-关系表开始
@@ -260,27 +274,22 @@ class CodebaseServices
         $tcpdb = new TControllerProtocol($db);
         $protocolsInDB = $tcpdb->getProtocolInfoFromControllerID($CodeControllerID);
         $protocolIDs = array_map(function($unit){
-            return $unit['Protocol'];
+            return $unit['ProtocolID'];
         },$protocolsInDB);
-        if(count($protocolIDs) != count($protocolsInDB)){
+        $diffProtocolsID = array_diff($protocolIDs,$hasProtocol);
+        if(count($diffProtocolsID) > 0){
             # 删除数据库里面的多余遥控器-协议关系表
-            if(count($protocolIDs) > count($protocolsInDB)){
-                $diffProtocolsID = array_diff($protocolIDs,$protocolsInDB);
-                foreach($diffProtocolsID as $val){
-                    $tcpdb->delete($CodeControllerID,$val); # todo 日志
+            foreach($diffProtocolsID as $val){
+                $tcpdb->delete($CodeControllerID,$val); # todo 日志
 
-                    if($cpdb->getProtocolID($val) < 0){
-                        # 删除该协议 因为没有遥控器使用它了
-                        $cpdb->delete($val);
-                    }
+                if($cpdb->isProtocolInUsed($val) <= 0){
+                    # 删除该协议 因为没有遥控器使用它了
+                    $cpdb->delete($val);
                 }
-
             }
         }
 
-
         # 维护协议-关系结束
-
 
         # 把红外代码数据插入到数据库
         $cbdb = new CodebaseDB($db);

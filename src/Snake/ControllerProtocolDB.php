@@ -98,7 +98,7 @@ class ControllerProtocolDB
      */
     public function delete($ProtocolID)
     {
-        return $this->db->delete('t_controller_protocol', array('ProtocolID' => $ProtocolID));
+        return $this->db->delete('protocol', array('ProtocolID' => $ProtocolID));
     }
 
     /**
@@ -107,7 +107,7 @@ class ControllerProtocolDB
      * @param $ProtocolID
      * @return int
      */
-    public function isProtocolInUser($ProtocolID)
+    public function isProtocolInUsed($ProtocolID)
     {
         return $this->db->count('t_controller_protocol', 'ControllerID', array(
             'ProtocolID' => $ProtocolID
