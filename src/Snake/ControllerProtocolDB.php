@@ -113,4 +113,13 @@ class ControllerProtocolDB
             'ProtocolID' => $ProtocolID
         ));
     }
+
+    /**
+     *
+     *
+     * @param $ControllerID
+     */
+    public function getProtocolIDsByControllerID($ControllerID){
+
+    }
 }
