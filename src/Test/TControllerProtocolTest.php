@@ -34,5 +34,23 @@ class TControllerProtocolTest extends PHPUnit_Framework_TestCase
 //        $r = $model->isProtocolInUser(10000);
 //        $this->assertTrue(count($r)>0,'测试');
     }
+
+    /**
+     * @test
+     */
+    public function getControllerProtocolMore2(){
+//        $model = new \Snake\TControllerProtocol($this->db);
+//        $r = $model->getControllerProtocolMore2();
+//        $this->assertTrue(count($r)>0,'测试');
+    }
+
+    /**
+     * @test
+     */
+    public function getProtocolIDsByControllerID(){
+//        $model = new \Snake\ControllerProtocolDB($this->db);
+//        $r = $model->getProtocolIDsByControllerID("6");
+//        $this->assertTrue(count($r)>0,'测试');
+    }
 }
  

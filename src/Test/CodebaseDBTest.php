@@ -79,5 +79,15 @@ class CodebaseDBTest extends PHPUnit_Framework_TestCase
 //        $r = $model->getOneControllerAllCodeids('1');
 //        $this->assertTrue(is_array($r),'测试获得某个遥控器所有建制');
     }
+
+    /**
+     * @test
+     */
+    public function getProtocolInfoFromControllerID()
+    {
+//        $model = new \Snake\CodebaseDB($this->db);
+//        $r = $model->getProtocolInfoFromControllerID('6');
+//        $this->assertTrue(is_array($r),'测试获得某个遥控器所有建制');
+    }
 }
  

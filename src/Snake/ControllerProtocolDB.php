@@ -115,11 +115,27 @@ class ControllerProtocolDB
     }
 
     /**
-     *
+     * 从协议中根据遥控器ID来获得相关的协议信息
      *
      * @param $ControllerID
+     * @return array
      */
     public function getProtocolIDsByControllerID($ControllerID){
+        $sql = "
+        SELECT p.ProtocolID,concat(p.ControllerProtocolFlag,p.RetransFrame,p.TVFormat,p.CarrierCycle,p.DataCycle,p.DataBits) as ProtocolContent,tcp.ControllerID
 
+        FROM aicodb.protocol as p
+
+        left join t_controller_protocol as tcp
+            on tcp.ProtocolID = p.ProtocolID
+
+        where tcp.ControllerID = ?
+
+        group by ProtocolContent
+        ";
+
+        $sql = str_replace("?",$ControllerID,$sql);
+
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

@@ -104,5 +104,29 @@ class TControllerProtocol
         return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * 获得关系表中遥控器拥有两个以上的遥控器ID
+     *
+     * @return array
+     */
+    public function getControllerProtocolMore2()
+    {
+        $sql = "
+            SELECT ControllerID,count(ProtocolID) as ptimes
+
+            FROM aicodb.t_controller_protocol
+
+            group by ControllerID
+            having ptimes >= 2
+        ";
+
+        $t = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+
+        $r = array_map(function ($unit) {
+            return $unit['ControllerID'];
+        }, $t);
+        return array_unique($r);
+    }
+
 
 } 

@@ -213,4 +213,26 @@ class CodebaseDB
     public function getCodesNumber(){
         return $this->db->count('codebase','*');
     }
+
+    /**
+     * 根据ControllerID
+     *
+     * @param $ControllerID
+     * @return array
+     */
+    public function getProtocolInfoFromControllerID($ControllerID)
+    {
+        $sql = "
+            select c.CodeID,substring(c.CodeKey,1,length(c.CodeKey) - length(CodeKeyTrue)) as ProtocolContent, c.CodeController
+
+            from codebase as c
+
+            where c.CodeController = ?
+            group by ProtocolContent
+        ";
+
+        $sql = str_replace("?",$ControllerID,$sql);
+
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
