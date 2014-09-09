@@ -125,7 +125,7 @@
             <a href="javascript:void(0);">
                 <i class="icon icon-th-list"></i>
                 <span>额外功能</span>
-                <span class="label">2</span>
+                <span class="label">3</span>
             </a>
             <ul>
                 <li
@@ -146,6 +146,15 @@
                     ?>
                     >
                     <a href="/options/select/brand/limit100">查看最近上传品牌</a>
+                </li>
+                <li
+                    <?php
+                        if($mainPhp['isOptionRequestProtocolClear']){
+                            echo 'class="active"';
+                        }
+                    ?>
+                    >
+                    <a href="/options/request/protocol/clear">清理多余的协议关系</a>
                 </li>
             </ul>
         </li>

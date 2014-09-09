@@ -111,6 +111,7 @@ $mainPhp = array(
     'isOptionsBrand100' => false,
     'pageName' => '主页面',
     'navName' => '主页面',
+    'isOptionRequestProtocolClear' => false,
 );
 
 # 主页
@@ -273,6 +274,22 @@ $app->get('/options/select/brand/limit100', function () use ($app, $mainPhp) {
     $r = $s->getBrandDescLimit100();
 
     $app->render('options/select/brand/limit/100.php', array(
+        'mainPhp' => $mainPhp,
+        'response' => $r
+    ));
+});
+
+$app->get('/options/request/protocol/clear',function() use ($app,$mainPhp){
+    $mainPhp['pageName'] = '清理多余的协议关系';
+    $mainPhp['navName'] = '清理多余的协议关系';
+    $mainPhp['isOptions'] = true;
+    $mainPhp['is100'] = true;
+    $mainPhp['leftSubMenu'] = false;
+    $mainPhp['isOptionRequestProtocolClear'] = true;
+
+    $r = \Snake\Services\ClearProtocol::run(true);
+
+    $app->render('options/request/protocol/clear.php', array(
         'mainPhp' => $mainPhp,
         'response' => $r
     ));

@@ -131,7 +131,7 @@ class ControllerProtocolDB
 
         where tcp.ControllerID = ?
 
-        group by ProtocolContent
+        -- group by ProtocolContent
         ";
 
         $sql = str_replace("?",$ControllerID,$sql);

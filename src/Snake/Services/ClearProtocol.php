@@ -20,6 +20,7 @@ class ClearProtocol {
      * 执行清理程序
      *
      * @param bool $isWeb
+     * @return array
      */
     public static function run($isWeb = false){
 
@@ -75,11 +76,11 @@ class ClearProtocol {
 
                 # 删除该关系
                 $r = $tcp->delete($controllerid,$protocolUnit[0]['ProtocolID']);
-                $logunit[] = "删除关闭表中的内容: " . $r ? "成功":"失败";
+                $logunit[] = "删除关系表中的内容: " . ($r ? "成功":"失败");
                 # 检查该协议是否被其他遥控器使用 如果没有 删除
                 if(!$cpdb->isProtocolInUsed($protocolUnit[0]['ProtocolID'])){
                     $r = $cpdb->delete($protocolUnit[0]['ProtocolID']);
-                    $logunit[] = "删除协议表中的内容: " . $r ? "成功":"失败";
+                    $logunit[] = "删除协议表中的内容: " . ($r ? "成功":"失败");
                 }
             }
 
@@ -87,14 +88,16 @@ class ClearProtocol {
             $result[] = $logunit;
         }
 
-        foreach($result as $unit){
-            foreach($unit as $line){
-                if($isWeb){
-                    echo $line . "</br>";
-                } else {
-                    echo $line . PHP_EOL;
-                }
-            }
-        }
+//        foreach($result as $unit){
+//            foreach($unit as $line){
+//                if($isWeb){
+//                    echo $line . "</br>";
+//                } else {
+//                    echo $line . PHP_EOL;
+//                }
+//            }
+//        }
+
+        return $result;
     }
 } 
