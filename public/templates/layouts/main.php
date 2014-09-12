@@ -154,7 +154,7 @@
                         }
                     ?>
                     >
-                    <a href="/options/request/protocol/clear">清理多余的协议关系</a>
+                    <a href="#">清理多余的协议关系</a>
                 </li>
             </ul>
         </li>
