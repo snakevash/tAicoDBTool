@@ -89,6 +89,10 @@ class CodebaseServices
 
                 # 组装CodeKey
                 $tmp['CodeKey'] = $this->getCodeKey($tmp);
+                # 过滤掉相关空值
+                if($tmp['CodeKey'] == ''){
+                    continue;
+                }
                 array_push($clearedData['codebasesData'], $tmp);
             }
         }
