@@ -125,7 +125,7 @@
             <a href="javascript:void(0);">
                 <i class="icon icon-th-list"></i>
                 <span>额外功能</span>
-                <span class="label">3</span>
+                <span class="label">4</span>
             </a>
             <ul>
                 <li
@@ -155,6 +155,13 @@
                     ?>
                     >
                     <a href="#">清理多余的协议关系</a>
+                </li>
+                <li
+                    <?php
+
+                    ?>
+                    >
+                    <a href="#">删除已经存在遥控器</a>
                 </li>
             </ul>
         </li>
