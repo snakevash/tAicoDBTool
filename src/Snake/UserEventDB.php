@@ -24,12 +24,19 @@ class UserEventDB {
     }
 
     /**
-     * 获得用户受到影响的CodeID
+     * 获得用户受到影响遥控器数量
      *
-     * @param $UserID
-     * @param $CodeIds
+     * @param array $ControllerIDs
+     * @return array
      */
-    public function getUserAffectedControllers($UserID,$CodeIds){
+    public function getUserAffectedControllers(array $ControllerIDs){
+        $sql = "
+            SELECT UserID
+            FROM user_layout
+            WHERE ControllerID IN ({implode(',',$ControllerIDs)})
+        ";
 
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
-} 
+
+}
