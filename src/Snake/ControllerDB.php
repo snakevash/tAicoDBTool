@@ -238,4 +238,14 @@ class ControllerDB
 
         return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    /**
+     * 获得遥控器所有的代码ID
+     *
+     * @param $ControllerID
+     * @return array|bool
+     */
+    public function getControllerAllCodeIDs($ControllerID){
+        return $this->db->select('codebase','CodeID',array('CodeController'=>$ControllerID));
+    }
 }
