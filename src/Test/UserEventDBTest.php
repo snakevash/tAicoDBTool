@@ -18,11 +18,26 @@ class UserEventDBTest extends PHPUnit_Framework_TestCase {
      * @test
      */
     public function getUserAffectedControllers(){
-        $model = new \Snake\UserEventDB($this->db);
+//        $model = new \Snake\UserEventDB($this->db);
+//
+//        $r = $model->getUserAffectedControllers(array(313));
+//
+//        $this->assertTrue(count($r) > 0,'测试');
+    }
 
-        $r = $model->getUserAffectedControllers(array(313));
+    /**
+     * @test
+     */
+    public function getUserLayout(){
+//        $model = new \Snake\UserEventDB($this->db);
+//
+//        $r = $model->getUserLayout(66,313);
+//
+//        $this->assertTrue(count($r) > 0,'测试');
+    }
 
-        $this->assertTrue(count($r) > 0,'测试');
+    public function getUserScenarioAffected(){
+
     }
 }
  
