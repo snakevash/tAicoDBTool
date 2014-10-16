@@ -62,20 +62,33 @@ class UserEventDB {
      * 获得用户场景影响
      *
      * @param $UserID
-     * @param $CodeID
      * @return array
      */
-    public function getUserScenarioAffected($UserID,$CodeID){
+    public function getUserScenarios($UserID){
         $sql = "
-            SELECT EventID
+            SELECT *
             FROM user_event
             WHERE UserID = $UserID
-            AND (EventCode LIKE '%" . $CodeID ."%')
             AND EventType = 4
         ";
 
         return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * 获得用户单次定时
+     *
+     * @param $UserID
+     * @return array
+     */
+    public function getUserTimingOne($UserID){
+        $sql = "
+            SELECT *
+            FROM user_event
+            WHERE UserID = $UserID
+            AND (EventType = 0 OR EventType = 2)
+        ";
 
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

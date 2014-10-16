@@ -36,8 +36,32 @@ class UserEventDBTest extends PHPUnit_Framework_TestCase {
 //        $this->assertTrue(count($r) > 0,'测试');
     }
 
+    /**
+     * @test
+     */
     public function getUserScenarioAffected(){
+        $s = new \Snake\Services\UserEventServices();
+        $s->getUserAffectedInfo(66,313);
 
+        $this->assertTrue(count($s)>0,'测试');
+    }
+
+    /**
+     * @test
+     */
+    public function getUserScenarios(){
+//        $model = new \Snake\UserEventDB($this->db);
+//        $r = $model->getUserScenarios(66);
+//        $this->assertTrue(count($r) > 0,'测试');
+    }
+
+    /**
+     * @test
+     */
+    public function getUserTimingOne(){
+//        $model = new \Snake\UserEventDB($this->db);
+//        $r = $model->getUserTimingOne(66);
+//        $this->assertTrue(count($r) > 0,'测试');
     }
 }
  
