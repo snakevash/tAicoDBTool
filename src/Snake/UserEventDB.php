@@ -91,4 +91,21 @@ class UserEventDB {
 
         return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    /**
+     * 获得用户场景定时
+     *
+     * @param $UserID
+     * @return array
+     */
+    public function getUserTimingScenarios($UserID){
+        $sql = "
+            SELECT *
+            FROM user_event
+            WHERE UserID = $UserID
+            AND (EventType = 0 OR EventType = 2)
+        ";
+
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
