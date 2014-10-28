@@ -62,7 +62,8 @@ class UserEventServices {
             return !is_null($ele);
         });
 
-
+        $userTimingScenarios = $model->getUserScenarios($UserID);
+//        $userAffectedEventIDsOfTimingScenarios = array_filter($userTimingScenarios);
 //        foreach($userHandledLayouts as $unitController){
 //            # 遍历单个遥控器下面用户所用到的按键
 //            foreach($unitController['codeids'] as $unitCodeID){

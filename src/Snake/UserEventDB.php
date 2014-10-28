@@ -103,9 +103,16 @@ class UserEventDB {
             SELECT *
             FROM user_event
             WHERE UserID = $UserID
-            AND (EventType = 0 OR EventType = 2)
+            AND (EventType = 1 OR EventType = 3)
         ";
 
         return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function isScenarioExists($EventID){
+        $sql = "
+            SELECT *
+            FROM user_event
+        ";
     }
 }
