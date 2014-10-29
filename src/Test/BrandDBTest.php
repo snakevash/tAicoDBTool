@@ -47,4 +47,13 @@ class BrandDBTest extends \PHPUnit_Framework_TestCase
 //        $r = $model->getBrandID('索尼');
 //        $this->assertEquals(1,$r,'获得品牌的ID');
     }
+
+    /**
+     * @test
+     */
+    public function touchBrandTime(){
+        $model = new \Snake\BrandDB($this->db);
+        $r = $model->touchBrandTime(1);
+        $this->assertEquals(1,$r,'测试');
+    }
 } 

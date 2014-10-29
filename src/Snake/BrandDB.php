@@ -216,4 +216,16 @@ class BrandDB
 
         return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    /**
+     * 更新品牌时间 目的是为了品牌更新的时候，可以立即显示
+     *
+     * @param $BrandID
+     * @return int
+     */
+    public function touchBrandTime($BrandID){
+        return $this->db->update('brand',array(
+            'LastModAt'=>date('Y-m-d H:i:s',time())
+        ),array('BrandID'=>$BrandID));
+    }
 } 

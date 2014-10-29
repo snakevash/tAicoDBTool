@@ -81,6 +81,9 @@ class BrandServices
 
                         # debug信息
                         if ($r) {
+                            # 更新BrandID时间戳 时间戳觉得遥控器是否被更新过
+                            $dbmodel->touchBrandTime($BrandID);
+
                             #$this->logConsole($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
                             $results[] = $this->logConsoleWeb($DisplayNameCN, $BrandName, $BrandID, $DeviceID);
                         } else {
