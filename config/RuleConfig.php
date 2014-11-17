@@ -22,9 +22,7 @@ class RuleConfig
                 'other'=>27,
             ),
             # 特殊规则
-            'spec'=>array(
-                #array(true,true,true,true),
-            )
+            'spec'=>true
         ),
         '有线电视机顶盒'=>array(
             # 普通类型
@@ -37,7 +35,7 @@ class RuleConfig
                 'other'=>27,
             ),
             # 特殊规则
-            'spec'=>null
+            'spec'=>true
         ),
         '机顶盒'=>array(
             # 普通类型
@@ -50,7 +48,7 @@ class RuleConfig
                 'other'=>27,
             ),
             # 特殊规则
-            'spec'=>null
+            'spec'=>true
         ),
         'DVD'=>array(
             # 普通类型

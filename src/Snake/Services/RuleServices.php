@@ -38,9 +38,33 @@ class RuleServices {
 
         foreach($workSheetNames as $workSheetName){
             $workSheet = $objPHPExcel->getSheetByName($workSheetName);
-            $this->clearData[$workSheetName] = $workSheet->toArray(null,true,true,true);
+            $codes = $workSheet->toArray(null,true,true,true);
+            $this->clearData[$workSheetName] = array();
+
+            # 开始数据结构
+            for($i=\RuleConfig::$rules[$workSheetName]['normal']['startline'];
+                $i<=\RuleConfig::$rules[$workSheetName]['normal']['endline'];
+                $i++){
+                $temp = array();
+                $temp['CodeDisplayName'] = $codes[$i]['A'];
+                $temp['CodeName'] = $codes[$i]['B'];
+                $temp['CodeOrder'] = $codes[$i]['C'];
+                $temp['CodeGroup'] = $codes[$i]['D'];
+                $temp['CodeDefaultIcon'] = $codes[$i]['E'];
+                $this->clearData[$workSheetName]['codes'][] = $temp;
+            }
+
+            # 有无特殊规则
+
+
         }
 
         return $this->clearData;
+    }
+
+    public function modifyData(&$data){
+//        if(isset($data['Menu']) && isset($data['Exit']) && isset($data['Back']) && isset($data['OK'])){
+//
+//        }
     }
 }

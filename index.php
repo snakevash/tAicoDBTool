@@ -30,7 +30,7 @@ require_once 'vendor/autoload.php';
 //}
 
 $files = \Snake\FileInfo::getFilePathInfo(OtherConfig::RULEXLS);
-$s = new \Snake\Services\RuleServices($files[0]);
+$s = new \Snake\Services\RuleServices($files[2]);
 $s->getClearData();
 
 $a = '';

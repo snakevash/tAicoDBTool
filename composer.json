@@ -26,7 +26,8 @@
             "config/OtherConfig.php",
             "config/BrandConfig.php",
             "config/CodeBaseConfig.php",
-            "config/SeriesConfig.php"
+            "config/SeriesConfig.php",
+            "config/RuleConfig.php"
         ]
     }
 }
