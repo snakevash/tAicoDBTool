@@ -48,6 +48,26 @@ class OtherConfig
      * 临时文件
      */
     const INIFile = 'snakeini.txt';
+
+    /**
+     * 规则xls目录
+     */
+    const RULEXLS = './rulexls';
+
+    /**
+     * @var array 中英文对照
+     */
+    public static $CN = array(
+        '电视' => 'TV',
+        '有线电视机顶盒' => 'CableTV',
+        '机顶盒' => 'STB',
+        'DVD' => 'DVD',
+        '投影机' => 'Projector',
+        '热水器' => 'Heater',
+        '功放' => 'Amp',
+        '风扇等' => 'Other',
+        '按键对照表' => 'MapTable'
+    );
 }
 
 /**
