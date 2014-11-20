@@ -29,6 +29,11 @@ class RuleServices {
         $this->clearData = array();
     }
 
+    /**
+     * 获得清洗过的数据
+     *
+     * @return array|mixed
+     */
     public function getClearData(){
         $objRead = \PHPExcel_IOFactory::createReader('Excel2007');
         $objRead->setLoadAllSheets();
