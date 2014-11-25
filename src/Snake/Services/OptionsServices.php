@@ -56,6 +56,9 @@ class OptionsServices {
             case '3':
                 return '精灵';
                 break;
+            case '4':
+                return '精灵用户库';
+                break;
             default:
                 break;
         }
